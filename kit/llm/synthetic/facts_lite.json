@@ -1,0 +1,117 @@
+{
+ "format": 1,
+ "_안내": "M0 KIT-2 시험용 합성 사실 목록이다. 이름 · 숫자는 모두 지어낸 것이다.",
+ "facts": [
+  {
+   "id": "f001",
+   "text": "PRD_A 두께 평균 100.2 nm (2026-09-01–09-30)",
+   "value": 100.2,
+   "unit": "nm",
+   "n": 30
+  },
+  {
+   "id": "f002",
+   "text": "PRD_A 두께에 변화점 후보 없음 (같은 기간)",
+   "value": null,
+   "unit": null,
+   "n": null
+  },
+  {
+   "id": "f003",
+   "text": "PRD_B 두께가 2026-09-16 부터 평균 +1.2 nm",
+   "value": 1.2,
+   "unit": "nm",
+   "n": 30
+  },
+  {
+   "id": "f004",
+   "text": "PRD_B 2026-09-16 이후 USL (103.0 nm) 초과 2 lot",
+   "value": 2,
+   "unit": "lot",
+   "n": 15
+  },
+  {
+   "id": "f005",
+   "text": "설비 중 EQ-03 의 PRD_B 두께 중앙값이 가장 높다 (101.5 nm)",
+   "value": 101.5,
+   "unit": "nm",
+   "n": 25
+  },
+  {
+   "id": "f006",
+   "text": "EQ-01 · EQ-02 · EQ-04 중앙값 차이 0.2 nm 안",
+   "value": 0.16,
+   "unit": "nm",
+   "n": 75
+  },
+  {
+   "id": "f007",
+   "text": "PRD_B 웨이퍼 맵의 불량 다이가 오른쪽 위 가장자리에 몰려 있다",
+   "value": null,
+   "unit": null,
+   "n": null
+  },
+  {
+   "id": "f008",
+   "text": "그 가장자리 군집의 불량 다이 26 개 (웨이퍼 1장)",
+   "value": 26,
+   "unit": "die",
+   "n": 1
+  },
+  {
+   "id": "f009",
+   "text": "불량 유형 1 위는 Residue (38%)",
+   "value": 38.0,
+   "unit": "%",
+   "n": 200
+  },
+  {
+   "id": "f010",
+   "text": "상위 3 유형이 전체의 81%",
+   "value": 81.0,
+   "unit": "%",
+   "n": 200
+  },
+  {
+   "id": "f011",
+   "text": "자료 기간 2026-09-01–09-30 · PRD_A 30 lot · PRD_B 30 lot",
+   "value": null,
+   "unit": null,
+   "n": 60
+  },
+  {
+   "id": "f012",
+   "text": "EQ-03 은 2026-09-15 에 정기 PM 을 했다 (설비 기록)",
+   "value": null,
+   "unit": null,
+   "n": null
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "k2_ctx_1.png",
+   "what": "PRD_A 두께 lot 추세 (2026-09)"
+  },
+  {
+   "id": "img2",
+   "file": "k2_ctx_2.png",
+   "what": "PRD_B 두께 lot 추세 (2026-09)"
+  },
+  {
+   "id": "img3",
+   "file": "k2_ctx_3.png",
+   "what": "PRD_B 두께 설비별 상자 그림"
+  },
+  {
+   "id": "img4",
+   "file": "k2_ctx_4.png",
+   "what": "PRD_B 웨이퍼 맵 1장 (fail die)"
+  },
+  {
+   "id": "img5",
+   "file": "k2_ctx_5.png",
+   "what": "불량 유형 파레토"
+  }
+ ]
+}

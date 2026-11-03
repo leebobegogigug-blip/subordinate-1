@@ -1,0 +1,67 @@
+# 이 저장소는 공개다 (RULES.md › W-12). 회사 자료가 실수로 올라가지 않게, 아래 묶음은 기본으로 막는다.
+
+# ── 개인 설정 · 앱 데이터: 커밋 금지 (데이터 자리는 %LOCALAPPDATA%\subordinate-1\ 이지만 옆에 생겨도 올라가지 않게)
+config.json
+*.db
+*.db-journal
+*.broken
+*.tmp
+
+# ── 로컬 데이터 폴더: SUBORDINATE_HOME 을 저장소 안으로 잡거나 자료를 옆에 풀어 둔 경우
+/data/
+/.subordinate-1/
+/.subordinate-home/
+
+# ── M0 정찰 키트가 사내 PC 에서 돌린 결과: 숫자와 판정만 사람이 옮겨 적는다
+/kit/results/
+
+# ── Office · 데이터 · 그림 파일: 어디에 있든 막는다 (회사 템플릿 · 실데이터 · 실제 장표 방지)
+*.pptx
+*.potx
+*.ppt
+*.xlsx
+*.xls
+*.csv
+*.png
+*.jpg
+*.jpeg
+
+# ── 위 파일 중 지어낸(합성) 것만 예외로 다시 허용한다. tools/repo_check.py 의 허용 폴더와 같다.
+#    tests/fixtures/ 와 kit/**/synthetic/ 은 전부, docs/images/ 는 그림만.
+!/tests/fixtures/**/*.pptx
+!/tests/fixtures/**/*.potx
+!/tests/fixtures/**/*.ppt
+!/tests/fixtures/**/*.xlsx
+!/tests/fixtures/**/*.xls
+!/tests/fixtures/**/*.csv
+!/tests/fixtures/**/*.png
+!/tests/fixtures/**/*.jpg
+!/tests/fixtures/**/*.jpeg
+!/kit/**/synthetic/**/*.pptx
+!/kit/**/synthetic/**/*.potx
+!/kit/**/synthetic/**/*.ppt
+!/kit/**/synthetic/**/*.xlsx
+!/kit/**/synthetic/**/*.xls
+!/kit/**/synthetic/**/*.csv
+!/kit/**/synthetic/**/*.png
+!/kit/**/synthetic/**/*.jpg
+!/kit/**/synthetic/**/*.jpeg
+!/docs/images/**/*.png
+!/docs/images/**/*.jpg
+!/docs/images/**/*.jpeg
+
+# ── Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# ── OS · 편집기
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

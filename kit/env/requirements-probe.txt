@@ -1,0 +1,14 @@
+# M0 정찰용 시험 목록이다. 최종 고정 목록(requirements.txt)이 아니다.
+# 판 번호를 일부러 적지 않는다 — 사내 PC 의 Python 판에 맞는 판을 pip 가 고르게 하고,
+# 그 판을 `check_env.py env` 결과로 받아 최종 고정 판을 정한다 (docs/PLAN.md › 08 KIT-1 · RULES.md › W-02).
+#
+# 참고: Python 3.8 에서 설치되는 가장 새 판 (pip download --python-version 3.8 --only-binary=:all: · 2026-11-03)
+#   python-pptx 1.0.2 · pandas 2.0.3 · openpyxl 3.1.5 · matplotlib 3.7.5 · scipy 1.10.1 · pywin32 311
+#   (pandas 2.0.3 은 Python 3.13 용 휠이 없다 — 판을 고정하면 새 Python 에서 설치가 막히므로 여기서는 고정하지 않는다)
+python-pptx
+pandas
+openpyxl
+matplotlib
+scipy
+# 선택 기능 (렌더 검사 · RULES.md › W-02) — 없어도 KIT-1 은 초록이 될 수 있다
+pywin32; sys_platform == "win32"
