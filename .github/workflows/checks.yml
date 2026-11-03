@@ -1,0 +1,27 @@
+name: checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        # 최소 Python 은 M0 정찰 뒤에 정한다 (docs/PLAN.md › T4). 정하기 전에는 최신 3.x 하나만 돌린다.
+        python: ["3.x"]
+    runs-on: ${{ matrix.os }}
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: 저장소 위생 검사 (비밀 · 사설 주소 · 자료 파일)
+        run: python tools/repo_check.py --strict
+      - name: 단위 테스트
+        run: python -m unittest discover -s tests -v
