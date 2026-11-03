@@ -42,7 +42,7 @@ OPENCODE 플러그인 + 사내 LLM · 자기 창 없음 · 지금은 이것 하�
 MIT
 </sub></p>
 
-<p align="center"><b>M0 정찰 중</b> · 아직 쓸 수 있는 기능은 없습니다 · 위의 그림은 모두 설계 그림입니다 · <a href="kit/README.md">정찰 키트 ›</a></p>
+<p align="center"><b>기획 5판</b> · M0 정찰을 마쳤고, PPTX 를 짓는 파이썬 도구는 만들지 않기로 했습니다 · 인터뷰로 근거 달린 <code>deck.md</code> 를 쓰고 PPTX 는 기성품 (Presenton · pandoc) 이 만듭니다 · 아래 그림은 4판 설계라 빌드 도구가 그려져 있습니다 — 곧 고칩니다 · <a href="docs/PLAN.md">기획서 ›</a></p>
 
 <br>
 
@@ -154,7 +154,7 @@ MIT
 
 <table align="center">
 <tr><td width="140">형태</td><td width="560">opencode 플러그인 — 에이전트 · 명령 · 스킬 + 파이썬 도구 · 자기 창 없음</td></tr>
-<tr><td>상태</td><td>M0 정찰 중 · 플러그인 코드 없음 · 설치 절차와 매뉴얼은 정찰 결과가 나온 뒤에</td></tr>
+<tr><td>상태</td><td>기획 5판 · M0 정찰 끝 · PPTX 빌드 도구는 만들지 않음 (기획서 00) · 플러그인 코드 없음 · 설치 절차는 스킬이 생긴 뒤에</td></tr>
 <tr><td>실행</td><td>Windows 10 / 11 · opencode · 최소 Python 판은 정찰 뒤에 정함</td></tr>
 <tr><td>호스트</td><td>opencode + 사내 LLM (지금은 이것 하나) · 스킬 + 어댑터(에이전트 · 명령)</td></tr>
 <tr><td>의존성</td><td>고정 목록 — <code>requirements.txt</code> 에 적은 것만, 판은 <code>==</code> 로 고정, 라이선스는 허용 목록 안 (python-pptx · pandas · openpyxl · matplotlib · scipy 예정)</td></tr>
