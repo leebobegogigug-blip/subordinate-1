@@ -1,23 +1,22 @@
 /* README 그림의 공용 스타일 — works 디자인 (docs/DESIGN.md) 의 토큰을 그대로 옮겼다.
    색은 네이비 · 라임 · 회색뿐이다. 빨강 · 주황 · 노랑 · 보라 · 분홍은 없다. 경고는 가장 밝은 글자색 + ERR 칩.
    글꼴 GNU Unifont 는 tools/readme_pages.mjs 가 @font-face 로 넣는다 (UnifontPage). 16px 의 8 배수에서 가장 또렷하다.
-   테마는 <html data-theme="dark|light"> 로 바꾼다 (렌더 스크립트가 정한다). */
+   테마는 <html data-theme="dark|light"> 로 바꾼다 (렌더 스크립트가 정한다).
+   Subordinate–1 은 창이 없는 opencode 플러그인이다. 그림에 나오는 창은 둘뿐이다 — opencode 대화창 (.term) 과 결과 PPTX 의 장표 (.on-paper). */
 
 :root{
   /* works 팔레트 — 네이비 = 뼈대 · 번호 · 버튼 · 선, 라임 = 지금 · 켜짐 · 진행 · 선택, 회색 = 글자, 흰색 = 숫자 · 경고 */
   --bg:#000;--panel:#0b0b0b;--panel-2:#131313;--lcd:#030303;--lcd-edge:#2a2a2a;
   --ink:#f2f2f3;--ink-2:#a5aaae;--ink-3:#81888d;--ink-4:#5c6166;
-  --lcd-ink:#f2f2f3;--lcd-ink-2:#a5aaae;
   --line:rgba(242,242,243,.09);--line-2:rgba(242,242,243,.2);
-  --accent:#6aba23;--accent-ink:#6aba23;--accent-dim:#2c4912;--on-accent:#0b0b0b;--accent-glow:rgba(106,186,35,.35);
+  --accent:#6aba23;--accent-ink:#6aba23;--accent-dim:#2c4912;--on-accent:#0b0b0b;
   --err:#f2f2f3;--err-ink:#0b0b0b;
   --prime:#1f507a;--prime-2:#3f77a6;--prime-deep:#002341;--prime-ink:#f2f2f3;--hl:rgba(63,119,166,.28);
   --card-edge:#3f77a6;--btn:#1f507a;--btn-ink:#f2f2f3;--btn-edge:#002341;
   --led-off:#35383b;
-  --seg-on:#f2f2f3;--seg-off:rgba(63,119,166,.34);
+  --paper:#d4d6d8;                   /* 장표 종이 — 다크 테마에서는 한 단계 낮춰 눈부시지 않게 */
   /* 인코더 네 색 (고정 순서): ① 파랑 ② 라임 ③ 흰색 ④ 회색 — "이 키가 이 값을 바꾼다" 일 때만 쓴다 */
   --k1:#75a1c7;--k2:#6aba23;--k3:#f2f2f3;--k4:#a5aaae;
-  --screw:#1a1a1a;--screw-edge:#333;--screw-slot:#050505;
   --dot:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='1' height='1' fill='%23fff' fill-opacity='.09'/%3E%3C/svg%3E");
   --dos:"UnifontPage","Unifont","Cascadia Mono",Consolas,"D2Coding","GulimChe",monospace;
   --b:1px 0 0 currentColor;          /* 도스식 굵게: 합성 볼드 대신 1px 옆에 한 번 더 찍는다 */
@@ -26,14 +25,12 @@
 :root[data-theme="light"]{
   --bg:#d4d6d8;--panel:#f2f2f3;--panel-2:#fafafb;--lcd:#050709;--lcd-edge:#002341;
   --ink:#0b0b0b;--ink-2:#4c5156;--ink-3:#81888d;--ink-4:#a5aaae;
-  --lcd-ink:#f2f2f3;--lcd-ink-2:#a5aaae;
   --line:rgba(0,35,65,.14);--line-2:rgba(0,35,65,.34);
-  --accent-ink:#45741b;--accent-dim:#c0e79d;--accent-glow:rgba(106,186,35,.3);
+  --accent-ink:#45741b;--accent-dim:#c0e79d;
   --err:#0b0b0b;--err-ink:#f2f2f3;
   --hl:rgba(63,119,166,.18);--card-edge:#1f507a;
   --led-off:#a5aaae;
-  --seg-on:#0b0b0b;--seg-off:rgba(0,35,65,.16);
-  --screw:#dcdee0;--screw-edge:#a5aaae;--screw-slot:#81888d;
+  --paper:#f2f2f3;
   --dot:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='1' height='1' fill='%23002341' fill-opacity='.14'/%3E%3C/svg%3E");
   color-scheme:light;
 }
@@ -49,13 +46,7 @@ i{font-style:normal}
   -webkit-font-smoothing:antialiased;overflow:hidden;background-color:var(--bg)}
 #cap.dots{background-image:var(--dot);background-size:16px 16px}
 
-/* 본체 — 각진 모서리 · 가는 선 · 모서리 나사 */
-.device{position:relative;background:var(--panel);border:1px solid var(--line-2)}
-.screw{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--screw);border:1px solid var(--screw-edge);z-index:4}
-.screw::after{content:"";position:absolute;left:1px;right:1px;top:50%;height:2px;margin-top:-1px;background:var(--screw-slot);transform:rotate(var(--r,35deg))}
-.s1{top:8px;left:8px}.s2{top:8px;right:8px;--r:-25deg}.s3{bottom:8px;left:8px;--r:75deg}.s4{bottom:8px;right:8px;--r:10deg}
-
-/* 번호 붙은 구역 — `01 SOURCE ──── 오른쪽 라벨` (DESIGN 원칙 3) */
+/* 번호 붙은 구역 — `01 OPENCODE ──── 오른쪽 라벨` (DESIGN 원칙 3) */
 .lbl{display:flex;align-items:center;gap:8px;height:16px;line-height:16px;color:var(--ink-3);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .lbl b{background:var(--prime);color:var(--prime-ink);padding:0 3px;text-shadow:none;letter-spacing:0}
 .lbl i{flex:1;height:1px;background:var(--prime)}
@@ -75,10 +66,7 @@ i{font-style:normal}
 .chip.dim{line-height:14px;border:1px solid var(--line);color:var(--ink-4)}
 .chip.paper{background:var(--ink);color:var(--panel)}
 
-/* LED 한 칸 = 한 단계 (▮) */
-.led{display:inline-flex;align-items:center;gap:4px;height:16px;line-height:16px;color:var(--ink-2);white-space:nowrap}
-.led i{width:8px;height:8px;background:var(--led-off)}
-.led.on i{background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+/* 칸 하나 = 한 단계 (▮) */
 .cells{display:inline-flex;gap:2px;vertical-align:top}
 .cells i{width:8px;height:16px;background:var(--led-off);opacity:.55}
 .cells i.on{background:var(--accent);opacity:1}
@@ -90,23 +78,48 @@ i{font-style:normal}
 .wavy{text-decoration:underline wavy var(--ink);text-underline-offset:4px;text-decoration-thickness:1px}
 .nowrap{white-space:nowrap}
 
-/* 7세그 (JS 가 SVG 로 그린다) */
-.seg{display:inline-block;vertical-align:top;overflow:visible}
-.seg .on{fill:var(--seg-on)}.seg .off{fill:var(--seg-off)}
+/* 늘 어두운 면 (터미널) · 늘 밝은 면 (장표 종이) — 테마와 상관없이 같은 값이다.
+   안의 칩 · 글자 · 차트는 변수만 바꿔서 그대로 쓴다 */
+.on-dark{--ink:#f2f2f3;--ink-2:#a5aaae;--ink-3:#81888d;--ink-4:#5c6166;
+  --line:rgba(242,242,243,.09);--line-2:rgba(242,242,243,.2);--panel:#0b0b0b;--panel-2:#131313;
+  --accent-ink:#6aba23;--card-edge:#3f77a6;--hl:rgba(63,119,166,.28);--err:#f2f2f3;--err-ink:#0b0b0b;
+  color:var(--ink)}
+.on-paper{--ink:#0b0b0b;--ink-2:#4c5156;--ink-3:#81888d;--ink-4:#a5aaae;
+  --line:rgba(0,35,65,.14);--line-2:rgba(0,35,65,.34);--panel:var(--paper);--panel-2:#fafafb;
+  --accent-ink:#45741b;--card-edge:#1f507a;--hl:rgba(63,119,166,.18);--err:#0b0b0b;--err-ink:#f2f2f3;
+  color:var(--ink);background:var(--paper)}
 
-/* 화면(LCD) 안은 테마와 상관없이 어둡다 — 캐릭터는 늘 이 안에 산다 */
-.lcdwell{position:relative;background:var(--lcd);border:1px solid var(--lcd-edge);color:var(--lcd-ink)}
-.lcdwell::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px);pointer-events:none}
+/* 터미널 창 — opencode 대화창을 그린 것이다. 이름만 적고 로고 · 실제 화면 모양은 흉내 내지 않는다.
+   줄 모양 넷: 사용자 (.t-u) · 에이전트 (.t-a) · 질문 상자 (.qbox) · 도구 실행 (.t-tool) */
+.term{position:relative;background:var(--lcd);border:1px solid var(--lcd-edge);overflow:hidden}
+.term .tb{display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;background:var(--prime-deep);white-space:nowrap}
+.term .tb .nm{color:var(--ink);text-shadow:var(--b)}
+.term .tb i{flex:1;height:1px;background:var(--prime-2);opacity:.55}
+.term .tb em{color:var(--ink-2)}
+.term .tx{padding:12px 16px}
+.t-u{display:flex;align-items:center;gap:8px;height:24px;padding:0 8px;background:var(--hl);border-left:2px solid var(--prime-2);white-space:nowrap;overflow:hidden}
+.t-u .pr{flex:none;width:8px;color:var(--accent-ink);text-shadow:var(--b)}
+.t-a{display:flex;align-items:center;height:24px;padding:0 10px;color:var(--ink-2);white-space:nowrap;overflow:hidden}
+.t-tool{padding:4px 8px;background:var(--panel);border-left:2px solid var(--ink-4)}
+.t-c,.t-o{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap;overflow:hidden}
+.t-c{color:var(--ink);text-shadow:var(--b)}
+.t-c .pr{flex:none;width:8px;color:var(--ink-3);text-shadow:none}
+.t-o{padding-left:16px;color:var(--ink-2)}
+.t-o b{color:var(--ink)}
+.t-ok{color:var(--accent-ink);text-shadow:var(--b)}
+.t-o .chip.err{height:20px;line-height:20px;padding:0 8px}      /* 멈춤 결과 줄 — 한글 글자가 칩 위아래에 붙지 않게 4px 키운다 */
 
-/* 막내 (픽셀 캐릭터) — 칸 하나 = 1 CSS px × 배율. 색은 팔레트 안에서만 */
-.mak{display:block;shape-rendering:crispEdges}
-.mak .W{fill:#f2f2f3}   /* white 머리 테두리 · 눈 · 입 · 와이셔츠 · 손 */
-.mak .N{fill:#1f507a}   /* navy2 얼굴 화면 */
-.mak .J{fill:#5c6166}   /* gray1 저고리 */
-.mak .T{fill:#3f77a6}   /* navy3 넥타이 */
-.mak .G{fill:#a5aaae}   /* gray 결재판 */
-.mak .P{fill:#f2f2f3}   /* 종이 */
-.mak .Q{fill:#a5aaae}   /* 글줄 */
-.mak .K{fill:#35383b}   /* gray0 클립 */
-.mak .L{fill:#6aba23}   /* lime 켜진 불 · 표시 */
-.mak .l{fill:#5c6166}   /* 꺼진 불 */
+/* 선택지 질문 — opencode 의 question 도구처럼 그렸다: 머리 · 질문 · 선택지 2–4개 (추천이 맨 앞) · 직접 입력 */
+.qbox{border:1px solid var(--card-edge);background:var(--panel);padding:8px 12px}
+.qbox .qh{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
+.qbox .qh .n{margin-left:auto;color:var(--ink-3)}
+.qbox .qq{line-height:24px;text-shadow:var(--b);white-space:nowrap;overflow:hidden}
+.qbox .os{margin-top:4px}
+.opt{display:flex;align-items:center;gap:8px;height:24px;padding:0 4px 0 0;white-space:nowrap;overflow:hidden}
+.opt .go{flex:none;width:16px;text-align:center;color:var(--accent-ink)}
+.opt .kn{flex:none;width:16px;height:16px;line-height:14px;text-align:center;border:1px solid var(--line-2);color:var(--ink-2);text-shadow:none}
+.opt.sel{background:var(--hl)}
+.opt.sel .kn{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.opt .chip{margin-left:auto}
+.opt .d{color:var(--ink-3)}
+.qbox .hint{height:16px;line-height:16px;margin-top:8px;color:var(--ink-3);white-space:nowrap;overflow:hidden}

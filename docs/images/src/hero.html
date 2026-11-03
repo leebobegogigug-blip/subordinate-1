@@ -2,179 +2,117 @@
 <html lang="ko" data-theme="dark">
 <head>
 <meta charset="utf-8">
-<title>Subordinate–1 · 본체 (설계 그림)</title>
+<title>Subordinate–1 · 쓰는 모습 (설계 그림)</title>
 <link rel="stylesheet" href="_base.css">
 <style>
-/* 설계 그림 — 만들 모습. 아직 만들기 전이다. 이름 · 숫자는 모두 지어낸 것 (kit/llm/synthetic/facts_lite.json 과 같은 합성 자료) */
-#cap{width:880px;height:672px}
-.device{position:absolute;left:16px;top:16px;width:848px;height:640px;background-image:var(--dot);background-size:16px 16px}
+/* 설계 그림 — 만들 모습. 아직 만들기 전이다. 이름 · 숫자는 모두 지어낸 것 (kit/llm/synthetic/facts_lite.json 과 같은 합성 자료).
+   Subordinate–1 은 opencode 플러그인이라 자기 창이 없다. 그림에 나오는 것은 둘뿐이다:
+   왼쪽 = opencode 대화창 (이름만 적은 일반 터미널 — 로고 · 실제 화면 모양을 흉내 내지 않는다), 오른쪽 = 결과로 나온 PPTX 파일 */
+#cap{width:880px;height:592px}
+.pos{position:absolute}
+.foot{position:absolute;left:16px;top:564px;height:16px;line-height:16px;color:var(--ink-2);white-space:nowrap}
 
-/* 위 줄 */
-.bar{position:absolute;left:0;right:0;top:0;height:88px;display:flex;align-items:center;gap:16px;padding:0 24px}
-.avatar{flex:none;width:72px;height:72px;padding:3px}
-.brand{flex:none}
-.logo{font-size:32px;line-height:32px;text-shadow:2px 0 0 currentColor;white-space:nowrap}
-.logo::after{content:"_";color:var(--accent-ink)}
-.tag{height:16px;line-height:16px;margin-top:4px;color:var(--ink-2);letter-spacing:1px}
-.lcd{display:flex;align-items:center;gap:12px;height:32px;padding:0 12px;white-space:nowrap}
-.lcd .k{color:var(--lcd-ink);text-shadow:var(--b)}
-.lcd .m{color:var(--lcd-ink-2)}
-.leds{display:flex;gap:16px;margin-left:auto;align-items:center}
+/* 01 OPENCODE — 터미널 (공용 조각은 _base.css 의 .term · .t-* · .qbox · .opt) */
+.term{left:16px;top:40px;width:424px;height:512px}
+.term .tx > * + *{margin-top:8px}
+.term .qq{height:48px}
 
-/* 구역 상자 */
-.pane{position:absolute;background:var(--panel-2);border:1px solid var(--line);padding:8px 12px}
-.pane .lbl{margin-bottom:8px}
-.dim{color:var(--ink-3)}
-
-/* 01 SOURCE */
-.file{display:flex;align-items:center;gap:8px;height:24px}
+/* 02 PPTX — 결과 파일: 회사 템플릿 위에 얹힌 장표 */
+.pane{left:496px;top:40px;width:368px;height:512px;background:var(--panel-2);border:1px solid var(--line-2);padding:12px;overflow:hidden}
+.tpl{border:1px dashed var(--ink-4);padding:8px}
+.tph{display:flex;align-items:center;gap:8px;height:24px;margin-bottom:8px;white-space:nowrap}
+.tph .logo{display:inline-flex;align-items:center;height:24px;padding:0 8px;border:1px dashed var(--ink-3);color:var(--ink-2)}
+.tph .chip{margin-left:auto}
+.slide{position:relative;height:192px;border:1px solid var(--line-2);overflow:hidden}
+.slide + .slide{margin-top:12px}
+.slide::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--prime)}
+.slide .st{position:absolute;left:10px;top:14px;width:262px;height:40px;line-height:20px;text-shadow:var(--b);white-space:nowrap}
+.slide .lg{position:absolute;right:10px;top:14px;width:32px;height:16px;border:1px dashed var(--ink-4)}
+.slide .rl{position:absolute;left:10px;right:10px;top:60px;height:2px;background:var(--prime)}
+.slide .fg{position:absolute;left:10px;top:72px;display:block;width:302px;height:68px}
+.slide .fg svg{display:block}
+.slide .ev{position:absolute;left:10px;right:10px;top:150px;height:16px;display:flex;align-items:center;gap:8px;line-height:16px;color:var(--ink-2);white-space:nowrap}
+.slide .pg{position:absolute;right:10px;bottom:6px;height:16px;line-height:16px;color:var(--ink-3)}
+.file{position:absolute;left:12px;right:12px;bottom:16px;display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
 .file .nm{text-shadow:var(--b)}
-.meta{height:16px;line-height:16px;color:var(--ink-3);margin:0 0 8px}
-.refs{display:flex;gap:4px;align-items:center;margin-bottom:8px;height:16px}
-.thumbs{display:flex;gap:8px}
-.tile{width:52px;text-align:center;line-height:16px;color:var(--ink-3)}
-.tile .box{width:52px;height:40px;border:1px solid var(--line-2);background:var(--panel);margin-bottom:4px;display:flex;align-items:center;justify-content:center}
+.file .d{color:var(--ink-3)}
 
-/* 02 INTERVIEW */
-.log1{display:flex;gap:8px;align-items:center;height:24px;color:var(--ink-3);margin-bottom:8px;white-space:nowrap}
-.log1 .u{color:var(--ink-2)}
-.budget{display:flex;align-items:center;gap:8px;height:24px;margin-bottom:8px;color:var(--ink-3)}
-.budget .num{display:flex;align-items:center;gap:4px;margin-left:auto}
-.ask{padding:8px 12px;margin-bottom:8px}
-.ask .q{line-height:24px;text-shadow:var(--b);white-space:nowrap}
-.ask .s{line-height:16px;color:var(--lcd-ink-2);white-space:nowrap}
-.opt{display:flex;align-items:center;gap:8px;height:24px;padding:0 4px 0 0;white-space:nowrap}
-.opt .go{width:16px;text-align:center;color:var(--accent-ink)}
-.opt.sel{background:var(--hl)}
-.opt .chip{margin-left:auto}
-.kn{display:inline-block;width:16px;height:16px;line-height:16px;text-align:center;text-shadow:none}
-.kn.k1{background:var(--k1);color:#0b0b0b}.kn.k2{background:var(--k2);color:#0b0b0b}
-.kn.k3{background:var(--k3);color:#002341;box-shadow:inset 0 0 0 1px var(--line-2)}.kn.k4{background:var(--k4);color:#0b0b0b}
-.hint{height:16px;line-height:16px;color:var(--ink-3);margin-top:16px;white-space:nowrap}
-
-/* 03 DECK */
-.grp{display:flex;gap:8px;margin-bottom:8px}
-.gb{flex:none;width:24px;background:var(--prime);color:var(--prime-ink);text-align:center;line-height:16px;padding-top:4px;text-shadow:var(--b)}
-.rows{flex:1;min-width:0}
-.rw{display:flex;align-items:center;gap:8px;height:44px}
-.rw + .rw{border-top:1px solid var(--line)}
-.th{position:relative;flex:none;width:64px;height:36px;border:1px solid var(--line-2);background:var(--panel)}
-.th .tb{position:absolute;left:4px;top:4px;height:2px;width:36px;background:var(--ink-2)}
-.th .ln{position:absolute;left:5px;height:2px;background:var(--line-2)}
-.th .ln.b{background:var(--ink-3)}
-.th [data-chart]{position:absolute;left:3px;top:9px}
-.th .miss{position:absolute;left:5px;top:10px;right:5px;bottom:5px;border:1px dashed var(--ink-3)}
-.tx{min-width:0}
-.tx .ti{height:20px;line-height:20px;text-shadow:var(--b);white-space:nowrap;overflow:hidden}
-.tx .ev{display:flex;align-items:center;gap:4px;height:16px;white-space:nowrap}
-.tx .ev span.d{color:var(--ink-3)}
-
-/* 04 CHECK */
-.crow{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
-.crow .t{width:32px;color:var(--ink-3)}
-.crow .c{color:var(--ink-2)}
-.crow .off{opacity:.45}
-.crow .sp{width:8px}
-.vrow{display:flex;gap:4px;margin:8px 0 0 40px}
-.vc{width:24px;text-align:center;line-height:16px;color:var(--ink-3)}
-.vc i{display:block;height:8px;margin-bottom:4px;background:var(--led-off);opacity:.55}
-.vc.on i{background:var(--accent);opacity:1}
-.vc.on{color:var(--ink-2)}
-.okline{height:16px;line-height:16px;margin-top:8px;color:var(--ink-2);white-space:nowrap}
-
-/* 05 STATUS */
-.foot{position:absolute;left:0;right:0;bottom:0;height:40px;border-top:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 24px;white-space:nowrap}
-.foot .r{margin-left:auto;color:var(--ink-3)}
+/* 열린 데서 닫힌 데로 — validate 가 OK 면 build */
+.arrow{left:440px;top:491px;width:56px;height:48px;text-align:center;color:var(--ink-2);line-height:16px}
+.arrow svg{display:block;margin:8px auto 0}
 </style>
 <script src="_sprite.js"></script>
 </head>
 <body>
 <div id="cap" class="dots">
-<div class="device">
-  <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
 
-  <div class="bar">
-    <div class="avatar lcdwell"><span data-mak="ask" data-scale="4"></span></div>
-    <div class="brand"><div class="logo">SUBORDINATE–1</div><div class="tag">근거 달린 보고 장표</div></div>
-    <div class="lcd lcdwell"><span class="k">이상 보고</span><span class="m">독자 팀장 · 자료 1 · 그림 5</span></div>
-    <div class="leds">
-      <span class="chip navy">DESIGN 설계 그림</span>
+  <div class="lbl pos" style="left:16px;top:16px;width:424px"><b>01</b>OPENCODE<em class="ko">대화창</em><i></i><em>창은 이것 하나</em></div>
+  <div class="lbl pos" style="left:496px;top:16px;width:368px"><b>02</b>PPTX<em class="ko">결과 파일</em><i></i><span class="chip navy">DESIGN 설계 그림</span></div>
+
+  <div class="term on-dark pos" data-fit>
+    <div class="tb"><span class="nm">opencode</span><i></i><em>subordinate-1 에이전트 · 사내 LLM</em></div>
+    <div class="tx">
+      <div class="t-u"><span class="pr">›</span><span>/subordinate "D:\자료\PRD_B_9월"<span class="lime">_</span></span></div>
+      <div class="t-a" data-fit>사실 12개 · 그림 5장을 읽었습니다.</div>
+
+      <div class="qbox">
+        <div class="qh"><span class="chip navy">현상</span><span class="n">질문 4/12</span></div>
+        <div class="qq" data-fit>이렇게 봤습니다 — PRD_B 두께가 9/16 부터<br>평균 +1.2 nm 올랐습니다 (f003). 맞습니까?</div>
+        <div class="os">
+          <div class="opt sel" data-fit><span class="go">▶</span><span class="kn">1</span><span>예</span><span class="d">— 이 현상으로 보고</span><span class="chip navy">추천</span></div>
+          <div class="opt" data-fit><span class="go"></span><span class="kn">2</span><span>일부만</span></div>
+          <div class="opt" data-fit><span class="go"></span><span class="kn">3</span><span>아니오</span><span class="d">— 다른 변화</span></div>
+          <div class="opt" data-fit><span class="go"></span><span class="kn">4</span><span class="dim2">직접 입력 …</span></div>
+        </div>
+        <div class="hint" data-fit>모름 · 나중에 › [미확인] 으로 남김</div>
+      </div>
+
+      <div class="t-u"><span class="pr">›</span><span>1 예</span></div>
+      <div class="t-a dim" data-fit>… 인터뷰 이어짐 · 줄거리 확인 · 확정</div>
+
+      <div class="t-tool">
+        <div class="t-c"><span class="pr">$</span><span>subordinate-1 validate deck.json</span></div>
+        <div class="t-o" data-fit>V-01 – V-10 · 빌드 전 7개 통과</div>
+        <div class="t-o" data-fit>ERR 0 · 숫자? 0 · [미확인] 1</div>
+        <div class="t-o t-ok">결과: OK</div>
+      </div>
     </div>
   </div>
 
-  <!-- 왼쪽: 01 SOURCE · 02 INTERVIEW -->
-  <section class="pane" style="left:16px;top:88px;width:320px;height:176px">
-    <div class="lbl"><b>01</b>SOURCE<em class="ko">자료</em><i></i><em>f001 – f012</em></div>
-    <div class="file"><span class="chip navy">CSV</span><span class="nm">thickness_lot.csv</span></div>
-    <div class="meta">60 lot · 2026-09-01–09-30</div>
-    <div class="refs"><span class="chip ref">f001</span><span class="chip ref">f002</span><span class="chip ref">f003</span><span class="dim">…</span><span class="chip ref">f012</span><span class="dim" style="margin-left:4px">사실 12</span></div>
-    <div class="thumbs">
-      <div class="tile"><div class="box"><span data-chart="flat" data-w="44" data-h="32" data-pad="3"></span></div>img1</div>
-      <div class="tile"><div class="box"><span data-chart="trend" data-w="44" data-h="32" data-pad="3"></span></div>img2</div>
-      <div class="tile"><div class="box"><span data-chart="box" data-w="44" data-h="32" data-pad="3"></span></div>img3</div>
-      <div class="tile"><div class="box"><span data-chart="wafer" data-w="44" data-h="32" data-pad="3"></span></div>img4</div>
-      <div class="tile"><div class="box"><span data-chart="pareto" data-w="44" data-h="32" data-pad="3"></span></div>img5</div>
-    </div>
-  </section>
-
-  <section class="pane" style="left:16px;top:272px;width:320px;height:312px">
-    <div class="lbl"><b>02</b>INTERVIEW<em class="ko">인터뷰</em><i></i><em>6 줄거리</em></div>
-    <div class="log1"><span class="chip ref">a04</span><span class="u">사용자</span><span data-fit>EQ-03 PM 재확인 요청</span></div>
-    <div class="budget"><span>질문</span><span class="cells"><i class="on"></i><i class="on"></i><i></i><i class="on gap"></i><i class="on"></i><i></i><i class="on gap"></i><i class="on"></i><i class="on"></i><i></i><i class="on gap"></i><i class="on"></i></span><span class="num"><span data-seg="09" data-u="2"></span><span>/12</span></span></div>
-    <div class="ask lcdwell"><div class="q">이 줄거리로 빌드할까요?</div><div class="s">제목만 읽어도 이야기가 이어집니다</div></div>
-    <div class="opt sel"><span class="go">▶</span><span class="kn k1">1</span><span>이대로 빌드 · 검사</span><span class="chip navy">추천</span></div>
-    <div class="opt"><span class="go"></span><span class="kn k2">2</span><span>제목 고치기</span></div>
-    <div class="opt"><span class="go"></span><span class="kn k3">3</span><span>장 순서 바꾸기</span></div>
-    <div class="opt"><span class="go"></span><span class="kn k4">4</span><span class="dim2">직접 입력 …</span></div>
-    <div class="hint" data-fit>모름 · 나중에 › [미확인] 으로 남김</div>
-  </section>
-
-  <!-- 오른쪽: 03 DECK · 04 CHECK -->
-  <section class="pane" style="left:352px;top:88px;width:480px;height:336px">
-    <div class="lbl"><b>03</b>DECK<em class="ko">줄거리</em><i></i><em>현상 › 분석 › 의견 › 한계</em></div>
-
-    <div class="grp"><div class="gb">현상</div><div class="rows">
-      <div class="rw"><div class="th"><span class="tb"></span><span data-chart="trend" data-w="56" data-h="22" data-pad="2"></span></div>
-        <div class="tx"><div class="ti" data-fit>PRD_B 두께가 9/16 부터 평균 +1.2 nm 올랐다</div><div class="ev"><span class="chip ref">img2</span><span class="chip ref">f003</span><span class="d">n=30 lot</span></div></div></div>
-      <div class="rw"><div class="th"><span class="tb"></span><span data-chart="trend" data-w="56" data-h="22" data-pad="2"></span></div>
-        <div class="tx"><div class="ti" data-fit>9/16 이후 2 lot 이 USL 103.0 nm 를 넘었다</div><div class="ev"><span class="chip ref">img2</span><span class="chip ref">f004</span><span class="d">n=15 lot</span></div></div></div>
-    </div></div>
-
-    <div class="grp"><div class="gb">분석</div><div class="rows">
-      <div class="rw"><div class="th"><span class="tb"></span><span class="ln b" style="top:12px;width:50px"></span><span class="ln" style="top:18px;width:44px"></span><span class="ln" style="top:24px;width:48px"></span></div>
-        <div class="tx"><div class="ti" data-fit>상승은 EQ-03 의 9/15 PM 직후에 시작됐다</div><div class="ev"><span class="chip chk">해석</span><span class="chip ref">f003</span><span class="chip ref">f012</span></div></div></div>
-      <div class="rw"><div class="th"><span class="tb"></span><span data-chart="box" data-w="56" data-h="22" data-pad="2"></span></div>
-        <div class="tx"><div class="ti" data-fit>EQ-03 의 두께 중앙값만 101.5 nm 로 높다</div><div class="ev"><span class="chip ref">img3</span><span class="chip ref">f005</span><span class="chip ref">f006</span><span class="d">설비 4대</span></div></div></div>
-    </div></div>
-
-    <div class="grp"><div class="gb">의견</div><div class="rows">
-      <div class="rw"><div class="th"><span class="tb"></span><span class="ln b" style="top:12px;width:44px"></span><span class="ln b" style="top:18px;width:40px"></span><span class="ln b" style="top:24px;width:34px"></span></div>
-        <div class="tx"><div class="ti" data-fit>EQ-03 PM 조건 재확인을 요청합니다</div><div class="ev"><span class="chip navy">의견</span><span class="chip ref">a04</span><span class="d">사용자의 말</span></div></div></div>
-    </div></div>
-
-    <div class="grp" style="margin-bottom:0"><div class="gb">한계</div><div class="rows">
-      <div class="rw"><div class="th"><span class="tb"></span><span class="miss"></span></div>
-        <div class="tx"><div class="ti" data-fit>PM 기록 전체는 아직 확인하지 못했다</div><div class="ev"><span class="chip gap">[미확인]</span><span class="chip ref">a03</span><span class="d">지울 수 없는 장</span></div></div></div>
-    </div></div>
-  </section>
-
-  <section class="pane" style="left:352px;top:432px;width:480px;height:152px">
-    <div class="lbl"><b>04</b>CHECK<em class="ko">검사</em><i></i><em>V-01 – V-10</em></div>
-    <div class="crow"><span class="t">막음</span><span class="chip err off">ERR 근거 없음</span><span class="c">0</span><span class="sp"></span><span class="chip warn off">숫자?</span><span class="c">0</span></div>
-    <div class="crow"><span class="t">표시</span><span class="chip chk">해석</span><span class="c">1</span><span class="sp"></span><span class="chip navy">의견 a04</span><span class="sp"></span><span class="chip gap">[미확인]</span><span class="c">1</span></div>
-    <div class="vrow"><div class="vc on"><i></i>01</div><div class="vc on"><i></i>02</div><div class="vc on"><i></i>03</div><div class="vc on"><i></i>04</div><div class="vc on"><i></i>05</div><div class="vc on"><i></i>06</div><div class="vc"><i></i>07</div><div class="vc"><i></i>08</div><div class="vc on"><i></i>09</div><div class="vc"><i></i>10</div></div>
-    <div class="okline" data-fit>√ 빌드 전 검사 통과 · 07 08 10 은 빌드 뒤에</div>
-  </section>
-
-  <div class="foot">
-    <span class="lbl"><b>05</b>STATUS</span>
-    <span class="led on"><i></i>G2 100%</span>
-    <span class="led on"><i></i>ghost deck</span>
-    <span class="led on"><i></i>템플릿 T03</span>
-    <span class="led on"><i></i>사내 LLM</span>
-    <span class="r">설계 그림 · 아직 만들기 전</span>
+  <div class="arrow pos">build
+    <svg width="40" height="16" viewBox="0 0 40 16" shape-rendering="crispEdges" fill="var(--prime-2)">
+      <rect x="0" y="7" width="38" height="2"/><rect x="30" y="1" width="2" height="2"/><rect x="32" y="3" width="2" height="2"/><rect x="34" y="5" width="2" height="2"/>
+      <rect x="36" y="7" width="2" height="2"/><rect x="34" y="9" width="2" height="2"/><rect x="32" y="11" width="2" height="2"/><rect x="30" y="13" width="2" height="2"/>
+    </svg>
   </div>
-</div>
+
+  <section class="pane pos" data-fit>
+    <div class="tpl">
+      <div class="tph"><span class="logo">회사 템플릿</span><span class="chip navy">T03</span></div>
+
+      <div class="slide on-paper">
+        <span class="lg"></span>
+        <div class="st" data-fit>PRD_B 두께가 9/16 부터<br>평균 +1.2 nm 올랐다</div>
+        <i class="rl"></i>
+        <span class="fg" data-chart="trend" data-w="302" data-h="68" data-pad="2"></span>
+        <div class="ev" data-fit><span>thickness_lot.csv · n=30 lot</span><span class="chip ref">f003</span></div>
+        <span class="pg">3</span>
+      </div>
+
+      <div class="slide on-paper">
+        <span class="lg"></span>
+        <div class="st" data-fit>EQ-03 의 두께 중앙값만<br>101.5 nm 로 높다</div>
+        <i class="rl"></i>
+        <span class="fg" data-chart="box" data-w="302" data-h="68" data-pad="2"></span>
+        <div class="ev" data-fit><span>thickness_lot.csv · 설비 4대</span><span class="chip ref">f005</span></div>
+        <span class="pg">5</span>
+      </div>
+    </div>
+
+    <div class="file"><span class="chip navy">PPTX</span><span class="nm" data-fit>PRD_B_보고_2026-11-03.pptx</span><span class="d">· 8장</span></div>
+  </section>
+
+  <div class="foot">설계 그림 · 아직 만들기 전 · 이름과 숫자는 모두 지어낸 것</div>
 </div>
 </body>
 </html>
