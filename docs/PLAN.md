@@ -1,11 +1,41 @@
-# Subordinate–1 기획서 (4판)
+# Subordinate–1 기획서 (5판)
 
-- 상태: 기획 4판 · 2026-11-03 · 앱 코드 0줄. works 저장소의 초안 (1–3판 · `docs/plans/`) 에서 이 저장소의 첫 커밋으로 옮겼다. 4판은 사용자 제안을 반영했다 — **지금은 사내 LLM (opencode) 전용 · Claude 는 회사가 엔터프라이즈 판을 들인 뒤 사용자가 사내에서 어댑터로 더해 튜닝한다 (M5)**. 앞선 답: 별도 공개 저장소 `subordinate-1` · 설치 자리 `D:\OPENCODE\subordinate-1` · 회사 템플릿 있음 (바뀔 수 있음) · Analysis–1 과 아예 별개 · 사내 PC pip 설치 가능 · 사내 LLM 은 그림을 본다. 갈린 결정은 부록 E · F · G. 남은 질문은 없다 (Q10 → MIT · `LICENSE`). 남은 것은 M0 결과다 — 5판에서 반영한다. works 문서 링크는 옮긴 때의 works `main` 커밋 (`6c93377`) 으로 고정했다.
+- 상태: 기획 5판 · 2026-11-03. M0 정찰을 마쳤다 — 사용자가 사내에서 돌린 결과 6줄과 결정은 00 에 있다. **결정: PPTX 를 짓는 파이썬 도구는 만들지 않는다 (N)** — 미리 적은 '만들지 않을 기준' 을 기성품이 넘었고 사용자가 확정했다. 남기는 것은 인터뷰 · 보고 문법 · 질문 은행을 묶은 opencode 스킬과 결과물 `deck.md` 다. 01 – 10 의 4판 내용은 기록으로 남기고, 접은 절에는 머리에 5판 표시를 달았다. 갈린 결정은 부록 E – H. works 문서 링크는 works `main` 커밋 (`6c93377`) 으로 고정했다.
 - 무엇: 원자료 (CSV · XLSX) 와 차트 그림 (PNG — 분석 도구 캡처 등) 을 받아, 사용자 인터뷰로 **현상 › 분석 › 의견** 을 채우고, 회사 PPT 템플릿에 맞춘 편집 가능한 PPTX 초안을 만드는 에이전트 플러그인.
 - 표기: [실험] 이 세션에서 직접 잰 값 (GitHub 별 수 · 라이선스 · 최근 push 는 2026-11-03 GitHub 검색 API 조회) · [문헌] 저장소 문서 · README · 라이선스 파일 · 공개 문헌에서 읽은 것 · [추정] 계산하거나 늘린 값 · [미확인] 확인하지 못한 사실 · [제안] 근거 없이 정한 문턱 (M0 결과로 고친다).
-- 번호: 목표 G1–G6 · 보고 문법 P-01–P-08 · 인터뷰 규칙 I-01–I-11 · 검사 V-01–V-10 · 정찰 KIT-1–KIT-6 · 리스크 대장 1–22 · 질문 Q1–Q10 · 마일스톤 M0–M4 · 작업 T1–T15. [DEVELOP.md](https://github.com/leebobegogigug-blip/Works/blob/6c9337753f34f1ec747107e9a2bfe2ab47589171/docs/DEVELOP.md) 의 D-01–D-11 과 겹치지 않게 골랐다.
+- 번호: 목표 G1–G6 · 보고 문법 P-01–P-08 · 인터뷰 규칙 I-01–I-11 · 검사 V-01–V-10 · 정찰 KIT-1–KIT-6 · 리스크 대장 1–24 · 질문 Q1–Q10 · 열어 둔 것 U1–U4 · M0 결과 K1–K6 · 마일스톤 M0–M4 · 작업 T1–T23. [DEVELOP.md](https://github.com/leebobegogigug-blip/Works/blob/6c9337753f34f1ec747107e9a2bfe2ab47589171/docs/DEVELOP.md) 의 D-01–D-11 과 겹치지 않게 골랐다.
 
-## 00 한 장 요약
+## 00 5판 — M0 결과와 결정
+
+결과 (2026-11-03 · 사용자가 사내에서 돌린 M0 키트의 6줄 · 형식은 `kit/README.md`):
+
+```text
+K1 G 3.13 0
+K4 Y 10 0 -
+K5 ? 0 -
+K2 G B O T 5
+K3 Y 14 6 0
+K6 N 100 4
+```
+
+| 줄 | 읽은 것 | 5판에 주는 것 |
+|---|---|---|
+| K1 | 사내 Python 3.13 · 필수 패키지를 모두 불러옴 | 파이썬 코드가 남는다면 최소 Python 은 3.13. 3.8 맞춤 제약 (AGENTS.md) 은 키트와 함께 거둔다 (T21) |
+| K4 | 레이아웃 10 · 제목 + 본문/그림 자리표시자를 함께 가진 레이아웃 0 · 이전 판 없음 | 키트는 내용 (OBJECT) 자리표시자까지 센다 [실험: `kit/env/check_env.py` 의 `BODY_TYPES`] — 키트 탓이 아니라 템플릿이 자리표시자 대신 도형 · 글상자로 짜였다 [추정]. 자리표시자에 끼워 넣는 방식은 이 템플릿에서 안 통한다 (리스크 10 현실화) |
+| K5 | 복구 대화상자 없이 열림 · 판정 · 넘침 칸은 비움 | 열림은 통과. 넘침은 미확인 (U4) |
+| K2 | 그림은 `modalities` 를 넣어야 닿음 (B) · 셸 도구 호출 됨 · 질문은 선택 화면 대신 글 목록 · deck-lite 구조 5/5 | `modalities` 는 설치의 필수 단계. 질문은 번호 목록으로 묻는다. 사내 LLM 은 정해 준 형식을 지킨다 |
+| K3 | 범주 14/17 (초록) · 숫자 6/9 (노랑) · 정답 파일 안 봄 | 그림은 '무엇이 보이나' 까지 맡긴다. 그림에서 읽은 숫자는 후보로만 (I-06 그대로) |
+| K6 | 결정 N · 가장 잘한 기성품 갈래 G2 100% · G3 4점 | 미리 적은 '만들지 않을 기준' (`kit/baseline/README.md`) 을 넘었다 |
+
+- **결정 — 만들지 않는다 (N).** 미리 적은 기준대로이고 사용자가 확정했다 (2026-11-03). 06 · 07 의 파이썬 빌드 도구 (profile · images · template · build · validate · render) 와 작업 T5 – T15 는 접는다.
+- **남기는 것 — 프롬프트 묶음 (opencode 스킬).** 인터뷰 (05 · I-01 – I-10) · 보고 문법 (04 · P-01 – P-08) · 질문 은행 (부록 B) 을 opencode 의 스킬 · 명령 · 에이전트로 묶는다. 결과물은 `deck.md` 하나 — 현상 › 분석 › 의견 순서, 장마다 한 문장 제목, 그림마다 근거 줄, 문장마다 종류 (사실 · 해석 · 의견 · `[미확인]`) 와 출처 id 를 적은 마크다운이다. 사용자는 이것을 Presenton 에 붙여 넣거나 pandoc 으로 PPTX 로 바꾼다. 파이썬 실행 의존은 없다 (RULES.md › W-02 를 다시 고친다 — T21).
+- **판정의 구멍 — 기록.** 4판의 판정 기준과 6줄 양식에는 세 칸이 없었다: 이긴 갈래 (Presenton · pandoc) · Presenton 을 두 번 돌려 둘 다 통과했는지 · 기준선 장표가 회사 템플릿 위였는지. 사용자는 셋을 답하지 않고 N 을 확정했다. 그래서 남기는 것을 셋 어느 경우에도 쓰이는 모양 (`deck.md` 하나로 두 기성품) 으로 정했고, 셋은 10 › 5판에서 열어 둔 것 (U1 – U4) 으로 둔다. 이 구멍은 기준을 설계한 기획의 실수다 — 다음 판정 기준에는 '회사 템플릿 위에서' 와 '누가 내용을 썼나' 를 넣는다.
+- **알려진 한계.** 회사 템플릿 맞추기 (K4) 는 이 묶음이 풀지 않는다. 기성품이 회사 템플릿을 받는지, 손으로 옮기는 데 얼마나 드는지는 T22 시범에서 잰다 (리스크 23).
+- **다음** — 부록 C 의 T16 – T23: `deck.md` 형식 › 스킬 · 명령 · 에이전트 › 기성품에 넣는 법 · 설치 › 적대 검토 › README · 그림 갱신 › 사내 시범 › 키트 정리.
+
+## 00-4 4판 한 장 요약 (기록)
+
+> 5판: 아래는 4판의 요약이다. 빌드 도구에 관한 부분은 접었다 (00).
 
 - **누구**: 데이터와 그림은 이미 있는데, 그것을 상사 · 유관 부서가 납득하는 보고 장표로 옮기는 데 시간이 드는 공정 · 설비 · 연구 엔지니어. Analysis–1 과 같은 사람이다.
 - **핵심 결정 셋 (2026-11-03 사용자 답으로 확정)**
@@ -185,6 +215,8 @@ works 밖 별도 저장소로 정했다 (Q1 · 2026-11-03). 그래서 1판의 W-
 
 ## 06 아키텍처
 
+> 5판: 이 절의 파이썬 빌드 도구는 만들지 않기로 했다 (00 · K6 N). 4판 기록으로 남긴다. 인터뷰 (05) 와 보고 문법 (04) 은 5판의 프롬프트 묶음이 그대로 쓴다.
+
 ### 모양 (별도 저장소 · Q1)
 
 ```text
@@ -265,6 +297,8 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
 
 ## 07 검사 V-01–V-10
 
+> 5판: 검사기는 빌드 도구와 함께 접었다. V-02 · V-03 의 뜻 (근거 없는 문장 · 근거에 없는 숫자는 장표에 못 올라간다) 은 스킬의 글쓰기 규칙으로 남는다 (T16 · T17).
+
 | # | 검사 | 실패하면 |
 |---|---|---|
 | V-01 | `deck.json` 스키마 · `format` | 막음 |
@@ -298,6 +332,8 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
 **만들지 않을 기준** [제안]: KIT-6 ② 가 G2 · G3 를 프롬프트만으로 80% 채우면 만들지 않는다. 대신 질문 은행 · 보고 문법 · 템플릿 매핑을 프롬프트 묶음으로만 낸다.
 
 ### M1 – M4
+
+> 5판: M1 – M4 는 접었다. 새 순서는 부록 C 의 T16 – T23 이다.
 
 | 단계 | 범위 | 합격 |
 |---|---|---|
@@ -334,6 +370,8 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
 | 20 | 회사 템플릿이 바뀌어 매핑이 깨짐 (Q3 '바뀔 수 있음') | 상 | 중 | `build` 의 지문 불일치 | 바뀜 감지 › `template diff` › 새 이름으로 등록 · 옛 판 보존 · `deck.json` 은 템플릿을 모른다 |
 | 21 | (없앰 — 4판에서 호스트가 하나가 됨 · 번호는 다시 매기지 않는다) | — | — | — | M5 에서 다시 본다 |
 | 22 | 개발 고리가 끊김 — 개발 세션은 사내 LLM · 사내 PC · 회사 템플릿을 못 본다. 인터뷰 품질 · 템플릿 매핑 · Office 열림은 사용자가 사내에서 돌린 결과로만 확인된다 | 확실 | 상 | 사내 실행 결과가 늦게 옴 | 결정적 도구는 CI 에서 끝까지 검증 · 사내 실행은 키트와 점검표로 짧게 · 결과는 원문 없이 숫자 · 판정 · 오류 이름만 넘긴다 · 인터뷰는 합성 시나리오 기록으로 먼저 다듬는다 |
+| 23 | 판정 기준의 구멍 — N 이 '기성품이 회사 템플릿까지 해 준다' 를 뜻하지 않을 수 있다 (U1 – U3) | 중 | 상 | T22 의 템플릿 맞추기 시간 | 시범에서 회사 템플릿 위로 옮기는 시간을 따로 잰다 · 오래 걸리면 '템플릿 맞추기만 하는 작은 도구' 를 다시 판정한다 (기준을 바꾼 것으로 기록) |
+| 24 | 실제 보고에서 사실 목록을 누가 만드나 — M0 는 합성 facts_lite 를 주었다 | 상 | 상 | 시범에서 숫자가 지어짐 · `[미확인]` 이 많음 | 스킬이 핵심 숫자를 사용자에게 받거나 분석 도구의 요약을 붙여 넣게 한다 · 그림에서 읽은 숫자는 후보로만 (K3) · 숫자마다 출처 (자료 파일 · 사용자 답 id) 를 `deck.md` 에 적는다 |
 
 ## 10 사용자에게 물을 것
 
@@ -371,9 +409,16 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
 
 ### 남은 질문
 
-- 없음.
+- 없음 — 5판 결정은 사용자가 확정했다 (2026-11-03).
 
-- 다음은 M0 이다: 작업표 T1–T3 (키트 · 시험지 · 기준선) 을 만들고, 사용자가 사내 PC 에서 돌려 결과 (원문 없이 숫자 · 판정) 를 넘긴다 → 5판.
+### 5판에서 열어 둔 것 (막지 않음)
+
+| # | 모르는 것 | 왜 막지 않나 | 언제 알게 되나 |
+|---|---|---|---|
+| U1 | KIT-6 에서 이긴 갈래 (Presenton · pandoc) | `deck.md` 하나로 두 기성품을 다 받게 만든다 (T16 · T18) | T22 시범 |
+| U2 | Presenton 을 두 번 돌려 둘 다 통과했나 (기준의 조건) | 사용자가 답 없이 N 을 확정했다 | T22 |
+| U3 | 기준선 장표가 회사 템플릿 위였나 | 템플릿 맞추기는 이 묶음 밖 — 알려진 한계 (리스크 10 · 23) | T22 에서 템플릿 맞추기 시간을 따로 잰다 |
+| U4 | K5 의 글자 넘침 장 수 | 빌드 도구를 접어 영향이 작다 | — |
 
 ## 부록
 
@@ -420,31 +465,32 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
 | B9 | 의견 | 이 결론을 얼마나 확신하십니까? | 확정 · 유력 · 가설 단계 |
 | B10 | 의견 | 이 보고로 무엇을 요청합니까? | 결정 · 자원 · 공유만 · 기타 |
 
-### C 작업표 (하위 에이전트용)
+### C 작업표 (하위 에이전트용 · 5판)
 
-이 세션의 사용자 설정 (4단 모델 배정) 에 따른 작업표다. 공개 저장소 `subordinate-1` 이 생겼다 (2026-11-03). T1–T3 의 키트는 이 저장소의 `kit/` 에 두고 M0 가 끝나면 지운다 [제안]. T4 와 T6 은 M0 결과가 있어야 시작한다 (T6 의 고정 판 · 최소 Python 이 M0 에서 정해진다). 같은 내용을 이 기획을 낸 세션의 보고에도 실었다.
+이 세션의 사용자 설정 (4단 모델 배정) 에 따른 작업표다. 4판 작업의 처리:
+
+| 작업 | 처리 |
+|---|---|
+| T1 – T3 | 끝남 — M0 키트 (PR #2 · #3) · 사용자가 사내에서 돌림 (00) |
+| T4 | 끝남 — 이 5판 |
+| T5 – T15 | 접음 — 파이썬 빌드 도구 (K6 N) |
+
+새 작업 T16 – T23:
 
 ```json
 {
-  "project_title": "Subordinate–1 — 원자료 · 차트 그림 + 인터뷰 → 현상 › 분석 › 의견 엔지니어링 보고 PPTX 플러그인",
-  "executive_summary": "스킬 한 벌과 opencode 어댑터로 붙는 인터뷰형 도구를 공개 저장소 subordinate-1 에 만들고, 그림을 보는 사내 LLM 이 인터뷰 · 글을, 결정적 파이썬 도구 (python-pptx · pandas · matplotlib · scipy) 가 숫자 · 그림 보관 · 템플릿 배치 · 검사를 맡는다. 문장마다 종류 (사실 · 해석 · 의견) 와 근거 id 를 달아 지어낸 원인 · 숫자가 빌드를 통과하지 못하게 하고, 바뀔 수 있는 회사 템플릿은 여러 벌 등록 · 바뀜 감지로 다룬다. 지금은 사내 LLM 전용이고 Claude 는 회사가 엔터프라이즈 판을 들인 뒤 사용자가 어댑터로 더하며, 사내 LLM 의 그림 · 도구 처리와 기성품 대비 가치를 1주 M0 정찰로 먼저 재고 5판에서 확정한다.",
-  "total_estimated_effort": 107,
+  "project_title": "Subordinate–1 (5판) — 인터뷰 › deck.md › 기성품 PPTX · 현상 › 분석 › 의견 프롬프트 묶음",
+  "executive_summary": "M0 결과 (K6 N) 에 따라 PPTX 를 짓는 파이썬 도구는 만들지 않고, 인터뷰 · 보고 문법 · 질문 은행을 opencode 스킬로 묶어 근거 달린 deck.md 를 쓰게 한다. 사용자는 deck.md 를 Presenton 에 붙여 넣거나 pandoc 으로 PPTX 로 바꾼다. 회사 템플릿 맞추기와 판정 기준의 구멍 (이긴 갈래 · 회사 템플릿) 은 사내 시범에서 따로 잰다.",
+  "total_estimated_effort": 48,
   "tasks": [
-    {"task_id": "T1", "task_name": "M0 사내 PC 확인 키트", "description": "pip 가 된다는 답 (Q5) 을 전제로 KIT-1 · KIT-4 · KIT-5 를 사용자가 사내 Windows PC 에서 그대로 돌릴 확인 스크립트와 점검표로 만든다. Python 판 확인 (최소 Python 결정용), 고정 의존 목록 설치 · import, PowerPoint COM (pywin32) 유무, 회사 템플릿 지금 판 · 이전 판의 레이아웃 · 자리표시자 목록과 지문 차이, python-pptx 로 만든 PPTX 가 복구 없이 열리는지를 확인한다. 판정 문턱은 결과를 보기 전에 적고, 출력에 회사 이름 · 경로 · 키가 찍히지 않게 한다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Environment_Probe_Engineer", "expected_output": "새 저장소의 kit/ (M0 뒤 지움 · PowerShell 5.1 호환 진입 · Python 스크립트) · 점검표 · 결과를 붙여 넣을 표 양식", "dependencies": []},
-    {"task_id": "T2", "task_name": "M0 사내 LLM · 그림 판독 시험지", "description": "KIT-2 — opencode + 사내 LLM 에서 그림이 모델에 실제로 닿는지 (provider 모델 설정의 modalities 있음 · 없음 두 번) · 도구 호출 · question 도구 · 그림 5장 + facts 의 맥락 길이 · 한국어 문장 · deck.json 스키마 통과율을 잰다. KIT-3 은 그림 10장의 사내 LLM 판독 vs 원자료 · 사용자 답 — 모양 서술 · 숫자 오차 · 웨이퍼 맵 작은 점 · 자동 축소 전후 · 잘라 보이기 전후. 합성 그림 · 합성 데이터만 쓰고, 점이 아니라 구간으로 판정하는 채점표를 만든다.", "tier": "Tier 1", "difficulty": "High", "effort_level": 6, "assigned_model": "claude-opus-5.5", "agent_role": "Evaluation_Designer", "expected_output": "시험지 마크다운 · 합성 입력 묶음 · 채점 스크립트 · 사전 등록한 문턱 표", "dependencies": []},
-    {"task_id": "T3", "task_name": "M0 기준선 비교 절차", "description": "KIT-6 — 같은 합성 자료로 손 작업 · Presenton + 사내 LLM · pandoc reference-doc 를 돌리는 절차와 G1–G6 채점표를 만든다. '만들지 않을 기준' (기성품이 G2 · G3 를 80% 채우면 중단) 의 판정 방법을 적는다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Benchmark_Analyst", "expected_output": "기준선 절차서 · 채점표 양식", "dependencies": ["T2"]},
-    {"task_id": "T4", "task_name": "5판 확정 — M0 결과", "description": "정찰 결과 (T1–T3) 로 최소 Python · 고정 의존 판 · opencode 권한 방식을 확정하고, 만들지 않을 기준을 판정한다. docs/PLAN.md 를 5판으로 고치고, 갈린 결정 표에 바뀐 것과 까닭을 남긴다.", "tier": "Tier 0", "difficulty": "Extreme", "effort_level": 9, "assigned_model": "claude-opus-5.5", "agent_role": "Core_Architect", "expected_output": "docs/PLAN.md (5판) · 갈린 결정 표", "dependencies": ["T1", "T2", "T3"]},
-    {"task_id": "T5", "task_name": "deck.json · 보고 문법 · 검사 명세", "description": "부록 A 를 JSON Schema 로 확정하고, P-01–P-08 과 V-01–V-10 을 기계가 판정할 수 있는 규칙으로 쓴다. 특히 V-03 숫자 대조의 규칙 (단위 · 유효숫자 · 반올림 · % · σ · 범위 표기) 과 kind 별 refs 요구, 장표 유형 목록, format 올리는 규칙을 정한다.", "tier": "Tier 0", "difficulty": "Extreme", "effort_level": 10, "assigned_model": "claude-opus-5.5", "agent_role": "Core_Architect", "expected_output": "schema/deck.schema.json · docs/SPEC-deck.md (규칙 · 예시 · 반례)", "dependencies": ["T4"]},
-    {"task_id": "T6", "task_name": "저장소 뼈대 · 규칙 채택표 · 설정 · CI", "description": "공개 저장소 subordinate-1 에 뼈대를 만든다: README (영감 고지문 포함 · LICENSE (MIT) 는 이미 있음) · INSTALL · docs/MANUAL.md · RULES.md (docs/PLAN.md 02 의 채택표) · AGENTS.md · requirements.txt (고정 판) · opencode/ 어댑터 빈 틀 · .gitignore (데이터 · 템플릿 · 실데이터 막기). CLI 입구 subordinate1/cli.py 에 설정 (config.json · --set · SUBORDINATE_HOME) 을 둔다. CI 는 Windows + Ubuntu × (최소 Python, 최신 Python) 이고 의존 라이선스 허용 목록 · 비밀처럼 보이는 문자열 · 사설 주소 검사를 넣는다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Repo_Scaffolder", "expected_output": "뼈대 커밋 하나 · 설정 단위 테스트 · 통과하는 빈 CI", "dependencies": ["T4"]},
-    {"task_id": "T7", "task_name": "profile — 원자료 → facts.json", "description": "CSV · XLSX 를 읽어 열 요약 · 추세 · 변화점 후보 · 이상점 · 집단 비교 (Is / Is-Not 후보) 를 id 달린 사실로 낸다. 값마다 단위 · n · 집계 수준 · 계산 방법을 남겨 V-03 과 근거 줄이 쓸 수 있게 한다. 계산은 pandas · scipy (고정 의존) 로 하고, 판과 계산 방법을 facts.json 머리에 적는다.", "tier": "Tier 1", "difficulty": "High", "effort_level": 7, "assigned_model": "claude-opus-5.5", "agent_role": "Data_Logic_Developer", "expected_output": "subordinate1/profile.py · facts.json 형식 · 단위 테스트", "dependencies": ["T5", "T6"]},
-    {"task_id": "T8", "task_name": "images · 템플릿 등록부", "description": "그림 원본 보관 (sha256 · 픽셀 크기 · 형식) 과 images.json, 그리고 템플릿 등록부를 만든다: template add (데이터 폴더로 복사 · 레이아웃 · 자리표시자 목록 · mapping.json 초안 · 사용자 확정), 등록 때의 sha256 · 레이아웃 지문 기록, build 때 지문이 다르면 멈추기, template diff (사라진 레이아웃 · 바뀐 자리표시자), 새 판은 새 이름으로 · 옛 판 보존. 테스트는 자리표시자 배치가 다른 합성 템플릿 둘로 한다.", "tier": "Tier 2", "difficulty": "Medium-High", "effort_level": 8, "assigned_model": "claude-sonnet", "agent_role": "Template_Engineer", "expected_output": "subordinate1/images.py · subordinate1/template.py · 합성 템플릿 둘 · 테스트", "dependencies": ["T5", "T6"]},
-    {"task_id": "T9", "task_name": "build — deck.json → PPTX", "description": "python-pptx 로 deck.json · mapping.json · 그림을 등록한 템플릿에 조립한다. 그림은 비율을 지켜 자리표시자 안에 맞추고, 그림 장표마다 근거 줄을, 노트에 근거 id 와 추론을 넣는다. 결과 파일은 덮어쓰지 않는다. python-pptx 는 어댑터 한 겹 뒤에 둔다 (리스크 12 — 비상구는 미리 만들지 않는다). 같은 deck.json 이 합성 템플릿 둘에서 모두 빌드되어야 한다.", "tier": "Tier 2", "difficulty": "Medium-High", "effort_level": 9, "assigned_model": "claude-sonnet", "agent_role": "Renderer_Engineer", "expected_output": "subordinate1/build.py · 어댑터 · 합성 보고 3종 PPTX 생성 테스트", "dependencies": ["T5", "T8"]},
-    {"task_id": "T10", "task_name": "validate — V-01–V-10", "description": "T5 명세대로 검사기를 만든다. 막는 검사와 알리는 검사를 나누고, ERR · 숫자? · 직접 표시를 다룬다. 숫자 대조는 반례 묶음 (반올림 · 단위 환산 · 퍼센트 포인트 · σ) 으로 시험한다.", "tier": "Tier 1", "difficulty": "High", "effort_level": 7, "assigned_model": "claude-opus-5.5", "agent_role": "Verification_Developer", "expected_output": "subordinate1/validate.py · 반례 묶음 테스트", "dependencies": ["T5", "T7"]},
-    {"task_id": "T11", "task_name": "스킬 + opencode 어댑터 (인터뷰)", "description": "skills/subordinate-1/SKILL.md 와 references (보고 문법 · 질문 은행 · 장표 유형 · 합성 예시) 를 쓰고, opencode 어댑터 — agents/subordinate-1.md (인터뷰 지침 · 권한: bash 는 subordinate-1 명령만 · 편집은 작업 폴더만) · commands/subordinate.md 를 만든다. SKILL.md 에는 호스트 이름에 묶인 문장 (도구 이름 · 권한 문법) 을 두지 않고 능력으로 쓴다 — 나중에 Claude 어댑터만 더하면 되게 (M5). I-01–I-10 을 지키고, question 도구가 안 되면 번호 목록으로 낮춘다. 그림마다 판독 메모 (숫자는 [추정]) 를 먼저 쓰고 사용자 확인을 받으며, 판독과 facts 가 어긋나면 원자료를 앞세운다. 합성 시나리오 기록으로 먼저 다듬고, 사용자가 사내에서 돌린 결과 요약 (원문 없음) 으로 고친다.", "tier": "Tier 1", "difficulty": "High", "effort_level": 6, "assigned_model": "claude-opus-5.5", "agent_role": "Interview_Designer", "expected_output": "skills/subordinate-1/ · opencode/agents/subordinate-1.md · opencode/commands/subordinate.md · 합성 시나리오 기록", "dependencies": ["T5"]},
-    {"task_id": "T12", "task_name": "다시 그리기 · 렌더 검사", "description": "SciencePlots 의 공학 · 과학 스타일에서 필요한 부분을 MIT 고지와 함께 subordinate1/styles/ 로 옮겨 회사 팔레트 (등록 템플릿의 테마 색) · 글꼴로 튜닝하고, facts 계열로 matplotlib 그림을 결정적으로 그린다 (라이트 · 2×). PowerPoint COM 또는 LibreOffice 로 장마다 PNG 를 뽑는 render 명령을 만들고, 둘 다 없으면 건너뛰고 그 사실을 출력한다. 렌더 PNG 를 호스트 모델이 장마다 보고 넘침 · 겹침 · 잘림을 알리는 시각 검토 단계를 스킬에 붙인다 (알림만).", "tier": "Tier 2", "difficulty": "Medium-High", "effort_level": 8, "assigned_model": "claude-sonnet", "agent_role": "Visualization_Engineer", "expected_output": "subordinate1/redraw.py · subordinate1/styles/ · subordinate1/render.py · 테스트 (COM 은 Windows CI 에서 있을 때만)", "dependencies": ["T7", "T9"]},
-    {"task_id": "T13", "task_name": "테스트 · 합성 데이터 · CI", "description": "unittest 로 합성 데이터 · 합성 템플릿 둘 · 골든 구조 (장 수 · 자리표시자 · 근거 줄 · 노트) 테스트와 템플릿 바뀜 감지 테스트를 묶는다. 도구는 LLM 을 부르지 않으므로 LLM 이 쓴 deck.json 은 기록된 합성 예시로 대신한다. README 의 테스트 수는 CI 가 확인하는 값만 적는다.", "tier": "Tier 2", "difficulty": "Medium-High", "effort_level": 8, "assigned_model": "claude-sonnet", "agent_role": "Test_Engineer", "expected_output": "tests/ · 합성 자료 · CI 통과 기록", "dependencies": ["T7", "T8", "T9", "T10"]},
-    {"task_id": "T14", "task_name": "통합 적대 검증", "description": "지어낸 숫자 · 근거 없는 원인 · LLM 의견을 deck.json 에 심어 V-02 · V-03 이 모두 막는지, 그림이 바뀌면 V-06 이, 템플릿이 바뀌면 지문 검사가 막는지 본다. 의존 라이선스 감사 (Anthropic 스킬 · AGPL 흔적 없음), 저장소의 회사 정보 · 사설 주소 · 키 흔적 검사, opencode.db 에 무엇이 남는지와 MANUAL 의 지우는 법, SKILL.md 에 호스트 이름에 묶인 문장이 없는지 (M5 대비), 사내 PowerPoint 실제 열기를 확인한다. 결함은 재현 테스트와 함께 보고한다.", "tier": "Tier 0", "difficulty": "Extreme", "effort_level": 10, "assigned_model": "claude-opus-5.5", "agent_role": "Security_Integrity_Auditor", "expected_output": "검증 보고서 · 결함마다 실패하는 테스트", "dependencies": ["T9", "T10", "T11", "T12", "T13"]},
-    {"task_id": "T15", "task_name": "문서 · opencode 설치 절차", "description": "README · docs/MANUAL.md · INSTALL.md (opencode 가 따라 하는 절차 · 규칙 절 · 단계마다 확인과 실패 시 할 일 · [질문] · 업데이트 · 제거) 를 쓴다. INSTALL 은 opencode 설정 폴더로 skills · agents · commands 를 복사하고 (같은 이름이 있으면 덮어쓰지 않고 묻기) 제거 때 그 파일만 지우며, provider 모델의 modalities 확인 단계를 둔다. MANUAL 에는 opencode.db 에 대화가 남는다는 한계와 지우는 법, 템플릿 등록 · 교체 절차, 나중에 다른 호스트를 붙이는 자리 (M5) 를 적는다. 숫자는 돌려서 얻은 값만 적는다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 4, "assigned_model": "claude-sonnet", "agent_role": "Documentation_Specialist", "expected_output": "문서 셋 · 깨진 링크 없음", "dependencies": ["T11", "T13"]}
+    {"task_id": "T16", "task_name": "deck.md 형식 명세", "description": "결과물 deck.md 의 마크다운 형식을 정한다 — 절 (현상 · 분석 · 의견 · 한계) · 장마다 한 문장 제목 · 그림 자리 (img id · 원본 파일 이름) 와 근거 줄 · 문장마다 종류 (사실 · 해석 · 의견 · [미확인]) 와 출처 id (자료 파일 · 사용자 답 id) · 발표자 노트. 같은 파일을 Presenton 에 붙여 넣어도, pandoc 으로 PPTX 로 바꿔도 장 나눔 · 제목 · 그림이 깨지지 않게 두 쪽 규칙을 함께 맞춘다 (pandoc 의 장 나눔 규칙은 실제로 돌려 확인). 합성 예시 하나와 반례 (근거 없는 숫자 · 사용자 말이 아닌 의견) 를 함께 낸다.", "tier": "Tier 1", "difficulty": "High", "effort_level": 6, "assigned_model": "claude-opus-5.5", "agent_role": "Spec_Designer", "expected_output": "docs/SPEC-deck-md.md · examples/deck_synthetic.md", "dependencies": []},
+    {"task_id": "T17", "task_name": "opencode 스킬 · 명령 · 에이전트", "description": "skills/subordinate-1/SKILL.md (인터뷰 I-01–I-10 · 보고 문법 P-01–P-08 · 질문 은행 · deck.md 쓰기) · opencode/agents/subordinate-1.md (권한: 자료 읽기 · 작업 폴더에 deck.md 쓰기만 · 셸 없음) · opencode/commands/subordinate.md (/subordinate <자료 폴더>) 를 만든다. 질문은 번호 목록 (K2) · 그림은 판독 메모만, 그림에서 읽은 숫자는 후보로 되묻기 (K3) · 의견은 사용자 답 id 로만 · 사실 숫자는 자료 파일이나 사용자 답에서 온 것만 출처를 달아 쓴다 (리스크 24). 호스트 이름에 묶인 문장을 두지 않는다 (M5 대비). kit 의 facts_lite · interview_lite 로 합성 대화 기록을 남긴다.", "tier": "Tier 1", "difficulty": "High", "effort_level": 7, "assigned_model": "claude-opus-5.5", "agent_role": "Interview_Designer", "expected_output": "skills/subordinate-1/ · opencode/agents/subordinate-1.md · opencode/commands/subordinate.md · 합성 대화 기록", "dependencies": ["T16"]},
+    {"task_id": "T18", "task_name": "기성품에 넣는 법", "description": "docs/USE-presenton.md · docs/USE-pandoc.md 를 쓴다 — deck.md 를 Presenton 에 붙여 넣는 절차 (사내 LLM 연결 · 외부 공급자 끄기 · 그림 넣기 · 내보내기) 와 pandoc --reference-doc 로 PPTX 로 바꾸는 절차. 회사 템플릿을 쓸 수 있는지와 손으로 옮기는 법은 [미확인] 으로 적고 T22 에서 채운다. 관리자 권한이 필요한 설치는 쓰지 않는다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Documentation_Specialist", "expected_output": "docs/USE-presenton.md · docs/USE-pandoc.md", "dependencies": ["T16"]},
+    {"task_id": "T19", "task_name": "INSTALL — opencode 설치 · 제거", "description": "opencode 가 따라 하는 INSTALL.md 를 쓴다 — 스킬 · 명령 · 에이전트를 opencode 설정 폴더로 복사 (같은 이름이면 덮어쓰지 않고 묻기) · 사내 provider 모델에 modalities (image) 넣기 (K2 B — 필수) · 업데이트 · 제거 때 그 파일만 지우기 · 키는 {env:…} 로만.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Documentation_Specialist", "expected_output": "INSTALL.md", "dependencies": ["T17"]},
+    {"task_id": "T20", "task_name": "README · 그림을 5판에 맞춤", "description": "README 를 5판에 맞춘다 — 결과물은 deck.md 이고 PPTX 는 기성품 (Presenton · pandoc) 이 만든다는 것, M0 결과 요약, 알려진 한계 (회사 템플릿 맞추기). 빌드 도구를 그린 그림 (hero 의 subordinate-1 validate · template 의 build 출력 · grammar 의 validate 표시) 을 deck.md 와 기성품 모습으로 고치거나 뺀다. docs/images/src 를 고치고 tools/readme_pages.mjs 로 다시 찍고, 라이트 · 다크 모두 눈으로 확인한다.", "tier": "Tier 2", "difficulty": "Medium-High", "effort_level": 8, "assigned_model": "claude-sonnet", "agent_role": "UI_Engineer", "expected_output": "README.md · docs/images/page/*.png · docs/images/src/*", "dependencies": ["T17", "T18"]},
+    {"task_id": "T21", "task_name": "키트 정리 · 규칙 되돌리기", "description": "시범 (T22) 이 끝나면 kit/ 와 tests/test_kit_*.py 를 지우고 CI 의 python-pptx 설치 단계를 뺀다. RULES.md W-02 를 '실행 의존 없음' 으로 고치고 AGENTS.md 의 Python 3.8 문장을 고친다. tools/repo_check.py 와 그 시험은 남긴다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 4, "assigned_model": "claude-sonnet", "agent_role": "Repo_Maintainer", "expected_output": "kit 삭제 커밋 · RULES · AGENTS · CI 수정", "dependencies": ["T22"]},
+    {"task_id": "T22", "task_name": "사내 시범 양식", "description": "실제 보고 몇 건을 opencode + 스킬로 deck.md 를 만들고 기성품으로 PPTX 를 만들어 재는 양식을 만든다 — G1 시간 · 지어낸 숫자 수 · G3 제목 이야기 점수 · 회사 템플릿 위로 옮기는 데 든 분 (U3 · 리스크 23) · 엔지니어 입에 넣은 의견 수 · 쓴 기성품 (U1). 결과는 6줄 양식처럼 한 줄씩 원문 없이 받고, 판정 문턱은 결과 전에 적는다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Benchmark_Analyst", "expected_output": "docs/PILOT.md (절차 · 판정 문턱 · 보낼 줄 양식)", "dependencies": ["T17", "T18", "T19"]},
+    {"task_id": "T23", "task_name": "적대 검토", "description": "합성 시나리오로 스킬을 레드팀한다 — 근거 없는 숫자를 쓰게 유도 · 사용자 말이 아닌 의견을 쓰게 유도 · 그림에서 읽은 숫자를 사실로 쓰게 유도 · 질문 예산을 넘기게 유도 · 회사 이름 같은 민감한 말을 deck.md 에 옮기게 유도. 막지 못한 경로는 SKILL.md 를 고쳐 막고, 고칠 수 없는 것은 알려진 한계로 적는다.", "tier": "Tier 0", "difficulty": "Extreme", "effort_level": 8, "assigned_model": "claude-opus-5.5", "agent_role": "Security_Integrity_Auditor", "expected_output": "검토 보고서 · SKILL.md 수정", "dependencies": ["T17"]}
   ]
 }
 ```
@@ -488,3 +534,17 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
 | 미리 남기는 것 | — | `SKILL.md` 의 호스트 중립 문장 · `deck.json` 의 `meta.host` | 나중 비용을 줄이는 값싼 이음매 |
 | 기획서 자리 | works `docs/plans/` 초안 | 이 저장소 `docs/PLAN.md` · works 링크는 `6c93377` 로 고정 | 저장소가 생겼다 |
 | 작업표 | 노력도 합 111 | 노력도 합 107 (T2 · T6 · T11 · T15 를 줄임) | 호스트 하나 |
+
+### H 갈린 결정 — 4판 › 5판 (2026-11-03 M0 결과 · 사용자 확정)
+
+| 결정 | 4판 | 5판 | 까닭 |
+|---|---|---|---|
+| 만들 것 | 인터뷰 스킬 + 파이썬 빌드 도구 (python-pptx · 템플릿 등록부 · 검사 · 렌더) | 프롬프트 묶음 (스킬 · 명령 · 에이전트) + `deck.md` | K6 N — 미리 적은 기준 · 사용자 확정 |
+| 결과물 | 회사 템플릿 위의 PPTX | `deck.md` (Presenton 붙여 넣기 · pandoc 변환) | 기성품이 PPTX 를 만든다 |
+| 실행 의존 | python-pptx · pandas · openpyxl · matplotlib · scipy | 없음 | 빌드 도구를 접음 |
+| 최소 Python | M0 뒤 결정 | 3.13 — 파이썬 코드가 남을 때만 | K1 |
+| 그림 | 판독 메모 · 다시 그리기 | 판독 메모 · 숫자는 후보로만 | K3 숫자 6/9 |
+| 질문 | question 도구 · 안 되면 번호 목록 | 번호 목록이 기본 | K2 T |
+| 설치 | `modalities` 확인 단계 | `modalities` 필수 단계 | K2 B |
+| 회사 템플릿 | 자리표시자 매핑 · 바뀜 감지 | 이 묶음 밖 — 알려진 한계 · 시범에서 잼 | K4 (자리표시자 0) · U3 |
+| 작업표 | T5 – T15 | T16 – T23 (노력도 합 48) | 위 결정 |
