@@ -1,6 +1,6 @@
 # Subordinate–1 기획서 (4판)
 
-- 상태: 기획 4판 · 2026-11-03 · 앱 코드 0줄. works 저장소의 초안 (1–3판 · `docs/plans/`) 에서 이 저장소의 첫 커밋으로 옮겼다. 4판은 사용자 제안을 반영했다 — **지금은 사내 LLM (opencode) 전용 · Claude 는 회사가 엔터프라이즈 판을 들인 뒤 사용자가 사내에서 어댑터로 더해 튜닝한다 (M5)**. 앞선 답: 별도 공개 저장소 `subordinate-1` · 설치 자리 `D:\OPENCODE\subordinate-1` · 회사 템플릿 있음 (바뀔 수 있음) · Analysis–1 과 아예 별개 · 사내 PC pip 설치 가능 · 사내 LLM 은 그림을 본다. 갈린 결정은 부록 E · F · G. 남은 질문은 하나 (Q10 라이선스), 남은 것은 M0 결과다 — 5판에서 반영한다. works 문서 링크는 옮긴 때의 works `main` 커밋 (`6c93377`) 으로 고정했다.
+- 상태: 기획 4판 · 2026-11-03 · 앱 코드 0줄. works 저장소의 초안 (1–3판 · `docs/plans/`) 에서 이 저장소의 첫 커밋으로 옮겼다. 4판은 사용자 제안을 반영했다 — **지금은 사내 LLM (opencode) 전용 · Claude 는 회사가 엔터프라이즈 판을 들인 뒤 사용자가 사내에서 어댑터로 더해 튜닝한다 (M5)**. 앞선 답: 별도 공개 저장소 `subordinate-1` · 설치 자리 `D:\OPENCODE\subordinate-1` · 회사 템플릿 있음 (바뀔 수 있음) · Analysis–1 과 아예 별개 · 사내 PC pip 설치 가능 · 사내 LLM 은 그림을 본다. 갈린 결정은 부록 E · F · G. 남은 질문은 없다 (Q10 → MIT · `LICENSE`). 남은 것은 M0 결과다 — 5판에서 반영한다. works 문서 링크는 옮긴 때의 works `main` 커밋 (`6c93377`) 으로 고정했다.
 - 무엇: 원자료 (CSV · XLSX) 와 차트 그림 (PNG — 분석 도구 캡처 등) 을 받아, 사용자 인터뷰로 **현상 › 분석 › 의견** 을 채우고, 회사 PPT 템플릿에 맞춘 편집 가능한 PPTX 초안을 만드는 에이전트 플러그인.
 - 표기: [실험] 이 세션에서 직접 잰 값 (GitHub 별 수 · 라이선스 · 최근 push 는 2026-11-03 GitHub 검색 API 조회) · [문헌] 저장소 문서 · README · 라이선스 파일 · 공개 문헌에서 읽은 것 · [추정] 계산하거나 늘린 값 · [미확인] 확인하지 못한 사실 · [제안] 근거 없이 정한 문턱 (M0 결과로 고친다).
 - 번호: 목표 G1–G6 · 보고 문법 P-01–P-08 · 인터뷰 규칙 I-01–I-11 · 검사 V-01–V-10 · 정찰 KIT-1–KIT-6 · 리스크 대장 1–22 · 질문 Q1–Q10 · 마일스톤 M0–M4 · 작업 T1–T15. [DEVELOP.md](https://github.com/leebobegogigug-blip/Works/blob/6c9337753f34f1ec747107e9a2bfe2ab47589171/docs/DEVELOP.md) 의 D-01–D-11 과 겹치지 않게 골랐다.
@@ -57,7 +57,7 @@ works 밖 별도 저장소로 정했다 (Q1 · 2026-11-03). 그래서 1판의 W-
 | W-09 | 이름을 바꾸면 데려간다 | 채택 — 이름은 `subordinate-1` (화면 Subordinate–1 · Q6). 공개 저장소에 올린 뒤에는 바꾸지 않는다 |
 | W-10 | 산출 PPTX 는 회사 템플릿의 색을 쓴다 (Q3) | 채택 + 해석 — 도구의 문서 · 그림은 works DESIGN, 산출물은 사용자 템플릿이 정한다 (Analysis–1 의 AN-09 와 같은 갈래) |
 | W-11 | CI · unittest · 검증 가능한 숫자만. 도구가 LLM 을 부르지 않아 가짜 서버는 거의 필요 없다 | 채택 |
-| W-12 | 회사 템플릿 · 로고 · 실데이터 · 실제 장표 금지 · 예시 · 테스트는 합성만 | 채택 — 공개 저장소다 (Q9). 저장소 라이선스는 Q10 |
+| W-12 | 회사 템플릿 · 로고 · 실데이터 · 실제 장표 금지 · 예시 · 테스트는 합성만 | 채택 — 공개 저장소다 (Q9). 저장소 라이선스는 MIT (Q10 · `LICENSE`) — 차용한 코드의 고지는 따로 둔다 |
 
 - works 쪽에 바꾼 것: 설치 자리를 `D:\OPENCODE\subordinate-1` 로 골라 (Q7) works `.gitignore` 에 `/subordinate-1/` 한 줄을 넣었다 (`/analysis-1/` 선례 · works 커밋 따로). 그 자리에 표준 라이브러리 밖 import 를 둔 빈 뼈대를 만들어, works 검사기가 앱으로 세지 않고 (위반 0) `git status` 가 깨끗한 것을 확인했다 [실험]. 그 밖에는 없다.
 
@@ -363,11 +363,15 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
 |---|---|---|
 | 지금은 사내 LLM 전용으로 · Claude 는 들어오면 사용자가 사내에서 튜닝 | 동의 — 4판 | Claude 어댑터 · 호스트 문턱 · 두 호스트 시험을 뺌 · I-11 을 '호스트를 더할 때의 규칙' 으로 · M5 를 나중 · 조건부로 · 리스크 21 없앰 · 22 더함 · 작업표 T2 · T4 · T6 · T11 · T14 · T15 |
 
+### 해결한 질문 (2026-11-03 사용자 답 · 넷째)
+
+| # | 질문 | 답 | 바뀐 것 |
+|---|---|---|---|
+| Q10 | 저장소 라이선스 | MIT | `LICENSE` 를 더함 (저작권자 표기는 GitHub 계정 이름) · T6 은 이제 M0 결과만 기다린다 |
+
 ### 남은 질문
 
-| # | 질문 | 선택지 (추천 먼저) | 고르면 |
-|---|---|---|---|
-| Q10 | 저장소 라이선스 (공개 저장소 · works 에도 `LICENSE` 파일이 없다) | ① MIT ② Apache-2.0 ③ 두지 않음 | ① 짧고 SciencePlots (MIT) 차용과 결이 같다 ② 특허 조항이 있다 ③ 공개여도 남이 쓸 권리가 없다. 어느 쪽이든 차용한 MIT 코드의 고지는 따로 둔다 |
+- 없음.
 
 - 다음은 M0 이다: 작업표 T1–T3 (키트 · 시험지 · 기준선) 을 만들고, 사용자가 사내 PC 에서 돌려 결과 (원문 없이 숫자 · 판정) 를 넘긴다 → 5판.
 
@@ -418,7 +422,7 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
 
 ### C 작업표 (하위 에이전트용)
 
-이 세션의 사용자 설정 (4단 모델 배정) 에 따른 작업표다. 공개 저장소 `subordinate-1` 이 생겼다 (2026-11-03). T1–T3 의 키트는 이 저장소의 `kit/` 에 두고 M0 가 끝나면 지운다 [제안]. T4 는 M0 결과가, T6 은 Q10 답이 있어야 시작한다. 같은 내용을 이 기획을 낸 세션의 보고에도 실었다.
+이 세션의 사용자 설정 (4단 모델 배정) 에 따른 작업표다. 공개 저장소 `subordinate-1` 이 생겼다 (2026-11-03). T1–T3 의 키트는 이 저장소의 `kit/` 에 두고 M0 가 끝나면 지운다 [제안]. T4 와 T6 은 M0 결과가 있어야 시작한다 (T6 의 고정 판 · 최소 Python 이 M0 에서 정해진다). 같은 내용을 이 기획을 낸 세션의 보고에도 실었다.
 
 ```json
 {
@@ -431,7 +435,7 @@ ppt-master 의 "닫힌 중간 언어 + 검사 게이트" 를 빌리되 기하가
     {"task_id": "T3", "task_name": "M0 기준선 비교 절차", "description": "KIT-6 — 같은 합성 자료로 손 작업 · Presenton + 사내 LLM · pandoc reference-doc 를 돌리는 절차와 G1–G6 채점표를 만든다. '만들지 않을 기준' (기성품이 G2 · G3 를 80% 채우면 중단) 의 판정 방법을 적는다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Benchmark_Analyst", "expected_output": "기준선 절차서 · 채점표 양식", "dependencies": ["T2"]},
     {"task_id": "T4", "task_name": "5판 확정 — M0 결과", "description": "정찰 결과 (T1–T3) 로 최소 Python · 고정 의존 판 · opencode 권한 방식을 확정하고, 만들지 않을 기준을 판정한다. docs/PLAN.md 를 5판으로 고치고, 갈린 결정 표에 바뀐 것과 까닭을 남긴다.", "tier": "Tier 0", "difficulty": "Extreme", "effort_level": 9, "assigned_model": "claude-opus-5.5", "agent_role": "Core_Architect", "expected_output": "docs/PLAN.md (5판) · 갈린 결정 표", "dependencies": ["T1", "T2", "T3"]},
     {"task_id": "T5", "task_name": "deck.json · 보고 문법 · 검사 명세", "description": "부록 A 를 JSON Schema 로 확정하고, P-01–P-08 과 V-01–V-10 을 기계가 판정할 수 있는 규칙으로 쓴다. 특히 V-03 숫자 대조의 규칙 (단위 · 유효숫자 · 반올림 · % · σ · 범위 표기) 과 kind 별 refs 요구, 장표 유형 목록, format 올리는 규칙을 정한다.", "tier": "Tier 0", "difficulty": "Extreme", "effort_level": 10, "assigned_model": "claude-opus-5.5", "agent_role": "Core_Architect", "expected_output": "schema/deck.schema.json · docs/SPEC-deck.md (규칙 · 예시 · 반례)", "dependencies": ["T4"]},
-    {"task_id": "T6", "task_name": "저장소 뼈대 · 규칙 채택표 · 설정 · CI", "description": "공개 저장소 subordinate-1 에 뼈대를 만든다: README (영감 고지문 포함) · LICENSE (Q10) · INSTALL · docs/MANUAL.md · RULES.md (docs/PLAN.md 02 의 채택표) · AGENTS.md · requirements.txt (고정 판) · opencode/ 어댑터 빈 틀 · .gitignore (데이터 · 템플릿 · 실데이터 막기). CLI 입구 subordinate1/cli.py 에 설정 (config.json · --set · SUBORDINATE_HOME) 을 둔다. CI 는 Windows + Ubuntu × (최소 Python, 최신 Python) 이고 의존 라이선스 허용 목록 · 비밀처럼 보이는 문자열 · 사설 주소 검사를 넣는다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Repo_Scaffolder", "expected_output": "뼈대 커밋 하나 · 설정 단위 테스트 · 통과하는 빈 CI", "dependencies": ["T4"]},
+    {"task_id": "T6", "task_name": "저장소 뼈대 · 규칙 채택표 · 설정 · CI", "description": "공개 저장소 subordinate-1 에 뼈대를 만든다: README (영감 고지문 포함 · LICENSE (MIT) 는 이미 있음) · INSTALL · docs/MANUAL.md · RULES.md (docs/PLAN.md 02 의 채택표) · AGENTS.md · requirements.txt (고정 판) · opencode/ 어댑터 빈 틀 · .gitignore (데이터 · 템플릿 · 실데이터 막기). CLI 입구 subordinate1/cli.py 에 설정 (config.json · --set · SUBORDINATE_HOME) 을 둔다. CI 는 Windows + Ubuntu × (최소 Python, 최신 Python) 이고 의존 라이선스 허용 목록 · 비밀처럼 보이는 문자열 · 사설 주소 검사를 넣는다.", "tier": "Tier 3", "difficulty": "Medium", "effort_level": 5, "assigned_model": "claude-sonnet", "agent_role": "Repo_Scaffolder", "expected_output": "뼈대 커밋 하나 · 설정 단위 테스트 · 통과하는 빈 CI", "dependencies": ["T4"]},
     {"task_id": "T7", "task_name": "profile — 원자료 → facts.json", "description": "CSV · XLSX 를 읽어 열 요약 · 추세 · 변화점 후보 · 이상점 · 집단 비교 (Is / Is-Not 후보) 를 id 달린 사실로 낸다. 값마다 단위 · n · 집계 수준 · 계산 방법을 남겨 V-03 과 근거 줄이 쓸 수 있게 한다. 계산은 pandas · scipy (고정 의존) 로 하고, 판과 계산 방법을 facts.json 머리에 적는다.", "tier": "Tier 1", "difficulty": "High", "effort_level": 7, "assigned_model": "claude-opus-5.5", "agent_role": "Data_Logic_Developer", "expected_output": "subordinate1/profile.py · facts.json 형식 · 단위 테스트", "dependencies": ["T5", "T6"]},
     {"task_id": "T8", "task_name": "images · 템플릿 등록부", "description": "그림 원본 보관 (sha256 · 픽셀 크기 · 형식) 과 images.json, 그리고 템플릿 등록부를 만든다: template add (데이터 폴더로 복사 · 레이아웃 · 자리표시자 목록 · mapping.json 초안 · 사용자 확정), 등록 때의 sha256 · 레이아웃 지문 기록, build 때 지문이 다르면 멈추기, template diff (사라진 레이아웃 · 바뀐 자리표시자), 새 판은 새 이름으로 · 옛 판 보존. 테스트는 자리표시자 배치가 다른 합성 템플릿 둘로 한다.", "tier": "Tier 2", "difficulty": "Medium-High", "effort_level": 8, "assigned_model": "claude-sonnet", "agent_role": "Template_Engineer", "expected_output": "subordinate1/images.py · subordinate1/template.py · 합성 템플릿 둘 · 테스트", "dependencies": ["T5", "T6"]},
     {"task_id": "T9", "task_name": "build — deck.json → PPTX", "description": "python-pptx 로 deck.json · mapping.json · 그림을 등록한 템플릿에 조립한다. 그림은 비율을 지켜 자리표시자 안에 맞추고, 그림 장표마다 근거 줄을, 노트에 근거 id 와 추론을 넣는다. 결과 파일은 덮어쓰지 않는다. python-pptx 는 어댑터 한 겹 뒤에 둔다 (리스크 12 — 비상구는 미리 만들지 않는다). 같은 deck.json 이 합성 템플릿 둘에서 모두 빌드되어야 한다.", "tier": "Tier 2", "difficulty": "Medium-High", "effort_level": 9, "assigned_model": "claude-sonnet", "agent_role": "Renderer_Engineer", "expected_output": "subordinate1/build.py · 어댑터 · 합성 보고 3종 PPTX 생성 테스트", "dependencies": ["T5", "T8"]},
