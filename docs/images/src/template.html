@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Subordinate–1 · 템플릿 지문 (설계 그림)</title>
+<link rel="stylesheet" href="_base.css">
+<style>
+/* 설계 그림 — 만들 모습. docs/PLAN.md 06 '템플릿': 등록할 때 파일 지문 (sha256) 과 레이아웃 지문을 적어 두고, 빌드할 때 다르면 멈춘다. 이름 · 지문 · 숫자는 모두 지어낸 것 */
+#cap{width:760px;height:352px}
+.board{position:absolute;left:8px;top:8px;width:744px;height:336px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px}
+.hd{display:flex;align-items:center;gap:12px;height:24px;white-space:nowrap}
+.hd .lbl{flex:1}
+.cards{position:relative;height:128px;margin-top:16px}
+.card{position:absolute;top:0;width:331px;height:128px;background:var(--panel);border:1px solid var(--line-2);padding:8px 12px}
+.card .t{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
+.card .t .nm{text-shadow:var(--b)}
+.kv{display:flex;align-items:center;height:24px;white-space:nowrap}
+.kv .k{width:112px;color:var(--ink-3)}
+.kv .v{flex:1;display:flex;align-items:center}
+.kv .v b{letter-spacing:1px}
+.ne{position:absolute;left:331px;top:48px;width:48px;text-align:center;font-size:32px;line-height:32px;color:var(--ink-2);text-shadow:2px 0 0 currentColor}
+.sum{height:24px;line-height:24px;margin-top:16px;white-space:nowrap;color:var(--ink-2)}
+.sum b{color:var(--ink)}
+.opts{margin-top:8px}
+.opt{display:flex;align-items:center;gap:8px;height:24px;padding:0 4px 0 0;white-space:nowrap}
+.opt .go{width:16px;text-align:center;color:var(--accent-ink)}
+.opt.sel{background:var(--hl)}
+.opt .chip{margin-left:auto}
+.kn{display:inline-block;width:16px;height:16px;line-height:16px;text-align:center;text-shadow:none}
+.kn.k1{background:var(--k1);color:#0b0b0b}.kn.k2{background:var(--k2);color:#0b0b0b}
+.block{position:absolute;left:0;right:0;bottom:0;height:40px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--err);color:var(--err-ink);white-space:nowrap}
+.block b{text-shadow:var(--b)}
+.block .d{opacity:.78}
+</style>
+</head>
+<body>
+<div id="cap">
+<div class="board">
+  <div class="hd">
+    <div class="lbl"><b>04</b>CHECK<em class="ko">템플릿 지문</em><i></i></div>
+    <span class="chip navy">DESIGN 설계 그림</span>
+  </div>
+
+  <div class="cards">
+    <div class="card" style="left:0">
+      <div class="t"><span class="chip navy">T03</span><span class="nm">등록할 때</span></div>
+      <div class="kv"><span class="k">파일</span><span class="v"><b>9f3a c21e</b></span></div>
+      <div class="kv"><span class="k">레이아웃</span><span class="v">12</span></div>
+      <div class="kv"><span class="k">제목 + 그림</span><span class="v">idx 0 · 1</span></div>
+    </div>
+    <div class="ne">×</div>
+    <div class="card" style="left:379px">
+      <div class="t"><span class="chip out">지금</span><span class="nm">빌드할 때</span></div>
+      <div class="kv"><span class="k">파일</span><span class="v"><span class="chip warn">41d7 0b5a</span></span></div>
+      <div class="kv"><span class="k">레이아웃</span><span class="v"><span class="chip warn">11</span></span></div>
+      <div class="kv"><span class="k">제목 + 그림</span><span class="v"><span class="chip warn">idx 0 · 2</span></span></div>
+    </div>
+  </div>
+
+  <div class="sum" data-fit><b>사라진 레이아웃 1</b> · <b>바뀐 자리표시자 2</b> — 장표 내용 (deck.json) 은 그대로입니다</div>
+
+  <div class="opts">
+    <div class="opt sel"><span class="go">▶</span><span class="kn k1">1</span><span>새 이름으로 등록 · T04 (옛 판 T03 은 그대로)</span><span class="chip navy">추천</span></div>
+    <div class="opt"><span class="go"></span><span class="kn k2">2</span><span>매핑만 다시 확인</span></div>
+  </div>
+
+  <div class="block"><b>× 빌드 멈춤</b><span class="d" data-fit>템플릿 지문이 다릅니다 — 확인하기 전에는 만들지 않습니다</span></div>
+</div>
+</div>
+</body>
+</html>

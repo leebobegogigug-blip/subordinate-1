@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Subordinate–1 · 막내의 표정 (설계 그림)</title>
+<link rel="stylesheet" href="_base.css">
+<style>
+/* 설계 그림 — 만들 모습. 막내 = 앱 상태를 표정 · 불빛으로 보여 주는 캐릭터 (DESIGN 원칙 7). 상태는 docs/PLAN.md 05 · 07 의 단계에서 따왔다 */
+#cap{width:720px;height:280px}
+.board{position:absolute;left:8px;top:8px;width:704px;height:264px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px}
+.hd{display:flex;align-items:center;gap:12px;height:24px;white-space:nowrap}
+.hd .lbl{flex:1}
+.tiles{display:flex;gap:8px;margin-top:16px}
+.tile{width:128px}
+.tile .lcdwell{width:128px;height:112px;display:flex;align-items:center;justify-content:center}
+.tile .lcdwell .mak{margin-top:4px}
+.tile .tag{position:absolute;right:8px;top:8px;z-index:2;background:#f2f2f3;color:#0b0b0b}
+.tile .en{margin-top:8px;height:16px;line-height:16px;letter-spacing:1px;color:var(--ink-2)}
+.tile .ko{height:24px;line-height:24px;text-shadow:var(--b);white-space:nowrap}
+.tile .at{height:16px;line-height:16px;color:var(--ink-3);white-space:nowrap}
+</style>
+<script src="_sprite.js"></script>
+</head>
+<body>
+<div id="cap">
+<div class="board">
+  <div class="hd">
+    <div class="lbl"><b>00</b>FACE<em class="ko">막내</em><i></i></div>
+    <span class="chip navy">DESIGN 설계 그림</span>
+  </div>
+  <div class="tiles">
+    <div class="tile"><div class="lcdwell"><span data-mak="idle" data-scale="6"></span></div><div class="en">IDLE</div><div class="ko">기다림</div><div class="at" data-fit>0 자료를 기다림</div></div>
+    <div class="tile"><div class="lcdwell"><span data-mak="ask" data-scale="6"></span></div><div class="en">ASK</div><div class="ko">묻는 중</div><div class="at" data-fit>‼ 답을 기다림</div></div>
+    <div class="tile"><div class="lcdwell"><span data-mak="work" data-scale="6"></span></div><div class="en">WORK</div><div class="ko">쓰는 중</div><div class="at" data-fit>◐ 빌드 · 검사</div></div>
+    <div class="tile"><div class="lcdwell"><span class="chip err tag">ERR</span><span data-mak="err" data-scale="6"></span></div><div class="en">ERR</div><div class="ko">막힘</div><div class="at" data-fit>× 근거 없음</div></div>
+    <div class="tile"><div class="lcdwell"><span data-mak="done" data-scale="6"></span></div><div class="en">DONE</div><div class="ko">인사</div><div class="at" data-fit>√ 검사 통과</div></div>
+  </div>
+</div>
+</div>
+</body>
+</html>
