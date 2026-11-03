@@ -7,8 +7,8 @@ Subordinate–1 을 만들기 전에, 회사 PC 에서 되는 것과 안 되는 
 | 폴더 | 무엇을 재나 | 상태 |
 |---|---|---|
 | [env/](env/README.md) | KIT-1 환경(Python · 패키지 · COM) · KIT-4 회사 템플릿 · KIT-5 PowerPoint 열림 | 이 폴더의 README 를 따라 하세요 |
-| llm/ | KIT-2 · KIT-3 사내 LLM 과 그림 판독 | 다른 작업에서 만드는 중입니다 |
-| baseline/ | KIT-6 기준선 비교 | M0 뒷부분에 만듭니다 |
+| [llm/](llm/README.md) | KIT-2 · KIT-3 사내 LLM 과 그림 판독 (opencode 는 저장소 밖 작업 폴더에서 엽니다) | 이 폴더의 README 를 따라 하세요 |
+| [baseline/](baseline/README.md) | KIT-6 기준선 비교 (기성품 도구로 충분한가) | 이 폴더의 README 를 따라 하세요 |
 
 ## 지켜 주실 것
 
