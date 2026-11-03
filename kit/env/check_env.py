@@ -189,6 +189,11 @@ def finish(code: int) -> int:
     return code
 
 
+def say_send_line(line: str) -> None:
+    """사용자가 손으로 옮겨 적을 한 줄 (ASCII). 마지막 '결과:' 줄 바로 앞에 찍는다."""
+    say("보낼 줄: " + line)
+
+
 # ───────────────────────── PNG (표준 라이브러리) ─────────────────────────
 
 def make_png(width: int = 160, height: int = 96) -> bytes:
@@ -382,14 +387,24 @@ def cmd_env(args: argparse.Namespace) -> int:
     say("LibreOffice: %s" % ("있음" if office["found"] else "없음"))
 
     code = FAIL if problems else OK
+    failed_required = sum(1 for v in packages.values() if v.get("required") and not v.get("imported"))
+    win32 = packages.get("pywin32", {})
+    if problems:
+        verdict = "R"
+    elif sys.platform.startswith("win") and not win32.get("imported"):
+        verdict = "Y"
+    else:
+        verdict = "G"
+    send_line = "K1 %s %d.%d %d" % (verdict, sys.version_info[0], sys.version_info[1], failed_required)
     record = {"kit": "KIT-1", "subcommand": "env", "kit_version": KIT_VERSION, "time": timestamp(),
               "python": py, "python_ok": py_ok, "pip": pip, "packages": packages, "extras": extras,
               "powerpoint_com": com, "libreoffice": office, "problems": problems,
-              "result": RESULT_LINES[code]}
+              "send_line": send_line, "result": RESULT_LINES[code]}
     path = write_result(args.results_dir, "env", record)
     say("결과 파일: %s" % display_path(path))
     for p in problems:
         say("문제: %s" % p)
+    say_send_line(send_line)
     return finish(code)
 
 
@@ -641,11 +656,21 @@ def cmd_template(args: argparse.Namespace) -> int:
             "%s %d개" % (t, i["usable_layout_count"]) for t, i in zip(tags, infos) if i))
     if args.show_names:
         say("이름은 화면에 찍지 않고 결과 파일에만 적었습니다.")
+    verdict = {OK: "G", HUMAN: "Y", FAIL: "R"}[code]
+    first = infos[0] if infos else None
+    layout_n = str(len(first["layouts"])) if first else "-"
+    usable_n = str(first["usable_layout_count"]) if first else "-"
+    if len(paths) == 2 and diff is not None:
+        diff_n = str(len(diff["changed"]) + len(diff["removed"]) + len(diff["added"]))
+    else:
+        diff_n = "-"
+    send_line = "K4 %s %s %s %s" % (verdict, layout_n, usable_n, diff_n)
     record = {"kit": "KIT-4", "subcommand": "template", "kit_version": KIT_VERSION, "time": timestamp(),
               "show_names": bool(args.show_names), "files": files, "inspections": infos,
-              "failures": failures, "diff": diff, "result": RESULT_LINES[code]}
+              "failures": failures, "diff": diff, "send_line": send_line, "result": RESULT_LINES[code]}
     path = write_result(args.results_dir, "template", record)
     say("결과 파일: %s" % display_path(path))
+    say_send_line(send_line)
     return finish(code)
 
 
@@ -860,12 +885,17 @@ def cmd_office(args: argparse.Namespace) -> int:
     code = FAIL if problems else HUMAN
     if not files:
         code = FAIL
+    send_line = "K5 ? ? ?" if files else "K5 - - -"
     record = {"kit": "KIT-5", "subcommand": "office", "kit_version": KIT_VERSION, "time": stamp,
               "files": files, "template_deck": template_info, "com": com_results if args.com else None,
               "problems": problems, "human_check": "PowerPoint 로 직접 열어 복구 대화상자 · 한글 넘침 확인",
-              "result": RESULT_LINES[code]}
+              "send_line": send_line, "result": RESULT_LINES[code]}
     rpath = write_result(args.results_dir, "office", record, stamp)
     say("결과 파일: %s" % display_path(rpath))
+    if files:
+        say("손으로 열어 본 뒤 아래 줄의 ? 세 개를 바꿔 적어 주세요: 판정(G 초록 · Y 노랑 · R 빨강, README 판정 문턱) · "
+            "복구 대화상자(없음 0 · 있음 1) · 넘치거나 잘린 장 수.")
+    say_send_line(send_line)
     return finish(code)
 
 

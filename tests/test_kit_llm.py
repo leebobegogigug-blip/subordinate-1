@@ -207,6 +207,144 @@ class TestWhole(Sandbox):
         self.assertNotIn("SECRETWORD", out)
 
 
+K2_RE = re.compile(r"^K2 [GYR-] [ABX-] [OX-] [OTX?] ([0-5]|-)$")
+K3_RE = re.compile(r"^K3 [GYR-] (\d+|-) (\d+|-) [01]$")
+LETTER = {"초록": "G", "노랑": "Y", "빨강": "R", "보류": "-"}
+
+
+def main_totals():
+    cat = num = 0
+    for c in TRUTH["kit3"].values():
+        if c["group"] != "main":
+            continue
+        for q in c["questions"].values():
+            if q["type"] == "choice":
+                cat += 1
+            else:
+                num += 1
+    return cat, num
+
+
+class TestSendLines(Sandbox):
+    def send(self, out):
+        lines = out.rstrip("\n").splitlines()
+        self.assertIn(lines[-1], LAST_LINES)
+        self.assertTrue(lines[-3].startswith("보낼 줄: K2 "), lines[-3])
+        self.assertTrue(lines[-2].startswith("보낼 줄: K3 "), lines[-2])
+        self.assertEqual(sum(1 for l in lines if l.startswith("보낼 줄:")), 2)
+        k2, k3 = lines[-3][len("보낼 줄: "):], lines[-2][len("보낼 줄: "):]
+        k2.encode("ascii"), k3.encode("ascii")
+        self.assertRegex(k2, K2_RE)
+        self.assertRegex(k3, K3_RE)
+        return k2.split(), k3.split()
+
+    def verdicts(self, out):
+        m = re.search(r"KIT-2 (\S+) · KIT-3 (\S+)", out)
+        return LETTER[m.group(1)], LETTER[m.group(2)]
+
+    def test_totals_come_from_truth(self):
+        self.assertEqual(main_totals(), (17, 9))                 # truth.json 이 바뀌면 이 시험이 알려 준다
+
+    def test_perfect(self):
+        self.write("answers.json", perfect_answers())
+        self.put_decks()
+        code, out, _ = self.run_score()
+        k2, k3 = self.send(out)
+        cat, num = main_totals()
+        self.assertEqual(k2, ["K2", "G", "A", "O", "O", "5"])
+        self.assertEqual(k3, ["K3", "G", str(cat), str(num), "0"])
+        self.assertEqual((k2[1], k3[1]), self.verdicts(out))
+        self.assertEqual(code, 0)
+
+    def test_counts_never_exceed_truth_totals(self):
+        ans = perfect_answers()
+        ans["c02.q1"] = "모름"
+        ans["c01.q2"] = "99999"
+        self.write("answers.json", ans)
+        self.put_decks()
+        _, out, _ = self.run_score()
+        _, k3 = self.send(out)
+        cat, num = main_totals()
+        self.assertEqual((int(k3[2]), int(k3[3])), (cat - 1, num - 1))
+        self.assertEqual(k3[1], self.verdicts(out)[1])
+
+    def test_image_b_only_and_question_variants(self):
+        for value, letter in (("글목록", "T"), ("안함", "X")):
+            ans = perfect_answers()
+            ans["k2.a.code"] = "ZZZ-000"
+            ans["k2.question"] = value
+            self.write("answers.json", ans)
+            self.put_decks()
+            _, out, _ = self.run_score()
+            k2, _ = self.send(out)
+            self.assertEqual((k2[2], k2[4]), ("B", letter))
+
+    def test_image_not_delivered_is_x_and_red(self):
+        ans = perfect_answers()
+        ans["k2.a.code"] = "그림 없음"
+        ans["k2.b.code"] = "ABC-123"
+        self.write("answers.json", ans)
+        self.put_decks()
+        _, out, _ = self.run_score()
+        k2, _ = self.send(out)
+        self.assertEqual((k2[1], k2[2]), ("R", "X"))
+        self.assertEqual(k2[1], self.verdicts(out)[0])
+
+    def test_wrong_ping_is_tool_x(self):
+        ans = perfect_answers()
+        ans["k2.ping"] = "PING-000000"
+        self.write("answers.json", ans)
+        self.put_decks()
+        _, out, _ = self.run_score()
+        k2, _ = self.send(out)
+        self.assertEqual((k2[1], k2[3]), ("R", "X"))
+
+    def test_missing_fields_are_dash_or_question_mark(self):
+        ans = perfect_answers()
+        for k in ("k2.question", "k2.ping", "k2.a.code", "k2.b.code"):
+            del ans[k]
+        del ans["c05.q3"]
+        self.write("answers.json", ans)
+        _, out, _ = self.run_score()                              # deck 파일 없음
+        k2, k3 = self.send(out)
+        self.assertEqual(k2, ["K2", "-", "-", "-", "?", "-"])
+        self.assertEqual(k3[1], "-")
+        self.assertEqual(k3[1], self.verdicts(out)[1])
+
+    def test_three_decks_yellow_and_pass_count(self):
+        self.write("answers.json", perfect_answers())
+        self.put_decks(3)
+        self.write("deck_4.json", "```json\n{}\n```")
+        self.write("deck_5.json", {"format": 1})
+        _, out, _ = self.run_score()
+        k2, _ = self.send(out)
+        self.assertEqual((k2[1], k2[5]), ("Y", "3"))
+        self.assertEqual(k2[1], self.verdicts(out)[0])
+
+    def test_peeked_variants(self):
+        for value, flag in (("예", "1"), ("yes", "1"), ("1", "1"), ("아니오", "0")):
+            ans = perfect_answers()
+            ans["peeked"] = value
+            self.write("answers.json", ans)
+            self.put_decks()
+            code, out, _ = self.run_score()
+            _, k3 = self.send(out)
+            self.assertEqual(k3[4], flag, value)
+            self.assertEqual(code, 3 if flag == "1" else 0)
+            self.assert_last(out, "결과: 확인 필요" if flag == "1" else "결과: OK")
+
+    def test_kit3_all_wrong_is_red_with_zero_counts(self):
+        ans = perfect_answers()
+        for cid, c in TRUTH["kit3"].items():
+            for qid in c["questions"]:
+                ans["%s.%s" % (cid, qid)] = "모름"
+        self.write("answers.json", ans)
+        self.put_decks()
+        _, out, _ = self.run_score()
+        _, k3 = self.send(out)
+        self.assertEqual(k3[1:4], ["R", "0", "0"])
+
+
 class TestUsage(Sandbox):
     def test_empty_folder_is_usage_error(self):
         code, out, err = self.run_score()

@@ -350,6 +350,7 @@ def main(argv=None) -> int:
         return 3
     share = matched / float(total)
     print("G2 비율: %.0f%% (문턱 %.0f%%) · 안 맞는 숫자 %d 개" % (share * 100, G2_TARGET * 100, unmatched))
+    print("K6 줄에 쓸 G2 (정수 %%): %d" % int(round(share * 100)))
     if share >= G2_TARGET and unmatched == 0:
         print("결과: OK")
         return 0
