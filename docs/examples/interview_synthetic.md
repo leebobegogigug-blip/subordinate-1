@@ -300,9 +300,10 @@ img3 장에 더해, 요약의 설비 기록 (f012 · EQ-03 은 2026-09-15 에 �
 ```text
 D:\보고\prd_b_두께\deck.md 에 썼습니다 (쓰기 허락 창에서 바뀐 내용을 확인하셨습니다).
 
-다음 길
-- pandoc: cd "D:\보고\prd_b_두께" 다음 pandoc deck.md -o deck.pptx (기본 양식으로 먼저 — 자리표시자가 없는 회사 양식을 --reference-doc 로 주면 실패할 수 있습니다)
-- Presenton: deck.md 를 넣고, 꼬리표 · 숫자가 바뀐 장은 deck.md 대로 되돌려 주십시오.
+다음 길 — Subordinate–1 저장소의 안내 문서를 따르십시오.
+- pandoc (docs/USE-pandoc.md): 자료 폴더에서 pandoc deck.md -o deck.pptx · 기본 양식으로 먼저 만드십시오. 회사 자료는 바깥 연결이 없는 이쪽부터 권합니다.
+- Presenton (docs/USE-presenton.md): 그 문서 2절 '자료가 밖으로 나가지 않게' 확인을 마친 뒤에만 쓰십시오.
+- 기성품이 꼬리표 · 숫자를 바꾼 장은 deck.md 대로 되돌려 주십시오.
 ```
 
 - 이렇게 쓴 `deck.md` 가 [docs/examples/deck_synthetic.md](deck_synthetic.md) 다 (그림 경로만 위에 적은 대로 다르다).
