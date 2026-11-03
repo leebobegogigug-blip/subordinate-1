@@ -62,7 +62,7 @@ USER_CHOICES = {
                     "글목록": ["글목록", "번호목록", "목록", "text", "글"],
                     "안함": ["안함", "안했음", "없음", "no", "실패"]},
     "k2.korean": {"좋음": ["좋음", "good"], "보통": ["보통", "ok"], "나쁨": ["나쁨", "bad"]},
-    "peeked": {"예": ["예", "yes", "y", "열었음"], "아니오": ["아니오", "아니요", "no", "n", "안열었음"]},
+    "peeked": {"예": ["예", "yes", "y", "1", "열었음"], "아니오": ["아니오", "아니요", "no", "n", "0", "안열었음"]},
 }
 USER_KEYS = ("k2.attach", "k2.question", "k2.korean", "k2.opencode", "k2.b.config", "peeked")
 
@@ -500,11 +500,17 @@ def user_choice(key: str, value: Optional[str]) -> str:
     return match_choice(value, list(opts), opts) or "알아볼 수 없음"
 
 
-def score_kit2(truth: dict, ans: Dict[str, str], results: str, lines: List[str]) -> str:
+VERDICT_LETTER = {GREEN: "G", YELLOW: "Y", RED: "R", HOLD: "-"}
+QUESTION_LETTER = {"선택화면": "O", "글목록": "T", "안함": "X"}
+
+
+def score_kit2(truth: dict, ans: Dict[str, str], results: str, lines: List[str],
+               facts: Optional[dict] = None) -> str:
     k2 = truth["kit2"]
     th = truth["thresholds"]
     lines.append("[KIT-2] opencode + 사내 LLM")
     delivered, runs_answered = False, 0
+    delivered_by = {}
     for key, label in (("a", "그림 A (설정 그대로)"), ("b", "그림 B (modalities 추가)")):
         code = ans.get("k2.%s.code" % key)
         shape = ans.get("k2.%s.shape" % key)
@@ -514,6 +520,7 @@ def score_kit2(truth: dict, ans: Dict[str, str], results: str, lines: List[str])
         runs_answered += 1
         ok = norm_code(code) == norm_code(k2[key]["code"])
         delivered = delivered or ok
+        delivered_by[key] = ok
         shape_ok = None if not shape else match_choice(shape, ["별", "삼각형", "원", "사각형"], {
             "별": ["star"], "삼각형": ["triangle", "세모"], "원": ["circle", "동그라미"], "사각형": ["square", "네모"]})
         shape_txt = "모양 답 없음" if not shape else ("모양 맞음" if shape_ok == k2[key]["shape"] else "모양 틀림")
@@ -588,10 +595,21 @@ def score_kit2(truth: dict, ans: Dict[str, str], results: str, lines: List[str])
     if tag_answered and tags_ok < th["context_tags_min"]:
         lines.append("  참고: 맥락 태그 %d/5 - 그림은 한 장씩 보이는 쪽으로 (리스크 2)" % tags_ok)
     lines.append("  판정: %s%s" % (verdict, " (%s)" % " · ".join(holds) if verdict == HOLD else ""))
+    if facts is not None:
+        if delivered_by.get("a"):
+            image = "A"
+        elif delivered_by.get("b"):
+            image = "B"
+        else:
+            image = "X" if runs_answered == 2 else "-"
+        question = QUESTION_LETTER.get(user_choice("k2.question", ans.get("k2.question")), "?")
+        facts.update({"verdict": VERDICT_LETTER[verdict], "image": image,
+                      "tool": "-" if not ping else ("O" if ping_ok else "X"),
+                      "question": question, "deck": str(s_pass) if found else "-"})
     return verdict
 
 
-def score_kit3(truth: dict, ans: Dict[str, str], lines: List[str]) -> str:
+def score_kit3(truth: dict, ans: Dict[str, str], lines: List[str], facts: Optional[dict] = None) -> str:
     th = truth["thresholds"]
     charts = truth["kit3"]
     lines.append("[KIT-3] 그림 판독")
@@ -635,6 +653,11 @@ def score_kit3(truth: dict, ans: Dict[str, str], lines: List[str]) -> str:
         js = [judge(cat_k, cat_n, tc["target"], tc["floor"]), judge(num_k, num_n, tn["target"], tn["floor"])]
         verdict = RED if RED in js else (GREEN if js == [GREEN, GREEN] else YELLOW)
     lines.append("  판정: %s%s" % (verdict, " (본 시험 답 없음 %d칸)" % missing if missing else ""))
+    if facts is not None:
+        answered = cat_n + num_n > 0
+        facts.update({"verdict": VERDICT_LETTER[verdict],
+                      "categorical": str(cat_k) if answered else "-",
+                      "numeric": str(num_k) if answered else "-"})
     return verdict
 
 
@@ -687,10 +710,12 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 2
     lines = ["Subordinate–1 M0 · KIT-2 · KIT-3 채점",
              "읽은 파일: %s" % " · ".join(used + decks), ""]
-    v2 = score_kit2(truth, ans, args.results, lines)
+    f2, f3 = {}, {}
+    v2 = score_kit2(truth, ans, args.results, lines, f2)
     lines.append("")
-    v3 = score_kit3(truth, ans, lines)
+    v3 = score_kit3(truth, ans, lines, f3)
     peek = user_choice("peeked", ans.get("peeked"))
+    peeked = "1" if peek == "예" else "0"
     lines.append("")
     lines.append("정답 파일을 연 일: %s" % peek)
     print("\n".join(lines))
@@ -698,6 +723,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     print("KIT-2 %s · KIT-3 %s" % (v2, v3))
     if peek == "예":
         print("정답 파일을 열었다면 그 시험은 무효입니다 - 새 세션에서 다시 하십시오.")
+    # 사용자가 손으로 옮겨 적을 두 줄 (ASCII) - 마지막 '결과:' 줄 바로 앞
+    print("보낼 줄: K2 %s %s %s %s %s" % (f2["verdict"], f2["image"], f2["tool"], f2["question"], f2["deck"]))
+    print("보낼 줄: K3 %s %s %s %s" % (f3["verdict"], f3["categorical"], f3["numeric"], peeked))
+    if peek == "예":
         print("결과: 확인 필요")
         return 3
     if RED in (v2, v3):

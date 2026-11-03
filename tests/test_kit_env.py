@@ -197,6 +197,79 @@ class Commands(Sandbox):
                 self.assertNotIn(home, raw)
 
 
+SEND_PREFIX = "보낼 줄: "
+K1_RE = re.compile(r"^K1 [GYR] \d\.\d+ \d+$")
+K4_RE = re.compile(r"^K4 [GYR] (\d+|-) (\d+|-) (\d+|-)$")
+K5_RE = re.compile(r"^K5 (\? \? \?|- - -)$")
+
+
+def send_line_of(out):
+    """마지막 '결과:' 줄 바로 앞 줄이 '보낼 줄:' 이어야 한다. 그 뒤의 문자열을 돌려준다."""
+    lines = out.rstrip("\n").splitlines()
+    assert lines[-1] in check_env.RESULT_LINES.values(), lines[-1]
+    assert lines[-2].startswith(SEND_PREFIX), lines[-2]
+    assert sum(1 for l in lines if l.startswith(SEND_PREFIX)) == 1
+    line = lines[-2][len(SEND_PREFIX):]
+    line.encode("ascii")                                   # 보낼 줄은 ASCII 만
+    return line
+
+
+class FakePlatformSys(object):
+    """check_env 안의 sys 만 platform 을 바꿔 보이게 하는 대리자 (shutil 등 표준 라이브러리는 건드리지 않는다)."""
+    def __init__(self, platform_name):
+        self.platform = platform_name
+
+    def __getattr__(self, name):
+        return getattr(sys, name)
+
+
+class SendLineEnv(Sandbox):
+    PIP_OK = {"ok": True, "version": "9.9", "error": None}
+
+    def env_line(self, packages, platform_name):
+        with mock.patch.object(check_env, "check_pip", return_value=self.PIP_OK), \
+                mock.patch.object(check_env, "PROBE_PACKAGES", packages), \
+                mock.patch.object(check_env, "sys", FakePlatformSys(platform_name)):
+            code, out = self.run_main("env")
+        return code, out, send_line_of(out)
+
+    def test_k1_green_off_windows(self):
+        code, out, line = self.env_line([("json", "json", True), ("pywin32", "no_such_zz", "win-opt")], "linux")
+        self.assertEqual(code, 0)
+        self.assertRegex(line, K1_RE)
+        self.assertEqual(line, "K1 G %d.%d 0" % sys.version_info[:2])
+        self.assertEqual(self.result_json()["send_line"], line)
+
+    def test_k1_green_on_windows_with_pywin32(self):
+        code, out, line = self.env_line([("json", "json", True), ("pywin32", "os", "win-opt")], "win32")
+        self.assertEqual((code, line.split()[1]), (0, "G"))
+
+    def test_k1_yellow_when_only_pywin32_fails_on_windows(self):
+        code, out, line = self.env_line([("json", "json", True), ("pywin32", "no_such_zz", "win-opt")], "win32")
+        self.assertEqual(code, 0)
+        self.assertEqual(line, "K1 Y %d.%d 0" % sys.version_info[:2])
+
+    def test_k1_red_counts_failed_required(self):
+        code, out, line = self.env_line([("a", "no_such_a", True), ("b", "no_such_b", True), ("json", "json", True)],
+                                        "linux")
+        self.assertEqual(code, 1)
+        self.assertEqual(line, "K1 R %d.%d 2" % sys.version_info[:2])
+        self.assertEqual(self.result_json()["send_line"], line)
+
+    def test_k1_red_when_pip_fails(self):
+        with mock.patch.object(check_env, "check_pip", return_value={"ok": False, "version": None, "error": "x"}), \
+                mock.patch.object(check_env, "PROBE_PACKAGES", [("json", "json", True)]):
+            code, out = self.run_main("env")
+        self.assertEqual(code, 1)
+        self.assertEqual(send_line_of(out).split()[1:2], ["R"])
+
+    def test_k1_real_run_matches_format_and_exit_code(self):
+        code, out = self.run_main("env")
+        line = send_line_of(out)
+        self.assertRegex(line, K1_RE)
+        self.assertEqual(line.split()[1] == "R", code == 1)
+
+
 @NEEDS_PPTX
 class WithPptx(Sandbox):
     def make_pptx(self, name, mutate=None, template=False):
@@ -281,6 +354,54 @@ class WithPptx(Sandbox):
         self.assertEqual(code, 0)
         self.assertNotIn(COMPANY_LAYOUT, out)
         self.assertIn(COMPANY_LAYOUT, json.dumps(self.result_json(), ensure_ascii=False))
+
+    def test_k4_two_files_counts(self):
+        a = self.make_pptx("a.pptx", self.rename_layout)
+        b = self.make_pptx("b.potx", self.drop_title_placeholder, template=True)
+        code, out = self.run_main("template", a, b)
+        line = send_line_of(out)
+        self.assertRegex(line, K4_RE)
+        info = self.result_json()
+        diff = info["diff"]
+        first = info["inspections"][0]
+        expect = "K4 G %d %d %d" % (len(first["layouts"]), first["usable_layout_count"],
+                                    len(diff["changed"]) + len(diff["removed"]) + len(diff["added"]))
+        self.assertEqual(line, expect)
+        self.assertEqual(info["send_line"], line)
+        self.assertGreaterEqual(int(line.split()[4]), 1)
+
+    def test_k4_single_file_has_dash(self):
+        code, out = self.run_main("template", self.make_pptx("one.pptx"))
+        line = send_line_of(out)
+        self.assertRegex(line, K4_RE)
+        self.assertEqual(line.split()[1], "G")
+        self.assertEqual(line.split()[4], "-")
+
+    def test_k4_yellow_without_usable_layout(self):
+        def strip_bodies(prs):
+            for layout in prs.slide_layouts:
+                for ph in list(layout.placeholders):
+                    if ph.placeholder_format.type is not None and ph.placeholder_format.type.name in check_env.BODY_TYPES + ("PICTURE",):
+                        ph._element.getparent().remove(ph._element)
+        code, out = self.run_main("template", self.make_pptx("nobody.pptx", strip_bodies))
+        line = send_line_of(out)
+        self.assertEqual((code, line.split()[1], line.split()[3]), (3, "Y", "0"))
+
+    def test_k4_red_when_open_fails(self):
+        bad = os.path.join(self.dir, "broken.pptx")
+        with open(bad, "wb") as f:
+            f.write(b"not a zip")
+        code, out = self.run_main("template", bad)
+        line = send_line_of(out)
+        self.assertRegex(line, K4_RE)
+        self.assertEqual((code, line), (1, "K4 R - - -"))
+
+    def test_k5_prints_question_marks(self):
+        code, out = self.run_main("office")
+        self.assertEqual(send_line_of(out), "K5 ? ? ?")
+        self.assertRegex(send_line_of(out), K5_RE)
+        self.assertEqual(self.result_json()["send_line"], "K5 ? ? ?")
+        self.assertIn("? 세 개를 바꿔", out)
 
     def test_template_open_failure_is_exit_1(self):
         bad = os.path.join(self.dir, "broken.pptx")
