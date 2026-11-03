@@ -23,5 +23,8 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: 저장소 위생 검사 (비밀 · 사설 주소 · 자료 파일)
         run: python tools/repo_check.py --strict
+      # M0 키트(kit/env) 시험용이다. kit/ 을 지울 때 이 단계도 함께 지운다.
+      - name: python-pptx 설치 (M0 키트 시험용)
+        run: python -m pip install python-pptx==1.0.2
       - name: 단위 테스트
         run: python -m unittest discover -s tests -v
