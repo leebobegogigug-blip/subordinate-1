@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Subordinate–1 · 결과물과 기성품</title>
+<link rel="stylesheet" href="_base.css">
+<style>
+/* deck.md 하나에서 두 갈래 — docs/USE-pandoc.md · docs/USE-presenton.md · docs/SPEC-deck-md.md 11 · 12 를 그대로 옮겼다.
+   PPTX 는 이 저장소가 만들지 않는다. 기성품이 만든다. 회사 템플릿 맞추기는 이 묶음 밖 (알려진 한계) */
+#cap{width:760px;height:554px}
+.board{position:absolute;left:8px;top:8px;width:744px;height:538px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px}
+.hd{display:flex;align-items:center;gap:12px;height:24px;white-space:nowrap}
+.hd .lbl{flex:1}
+.bar{position:absolute;left:16px;width:710px}
+.file{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;background:var(--panel);border:1px solid var(--card-edge);white-space:nowrap}
+.file .t{text-shadow:var(--b)}
+.file .d{color:var(--ink-3)}
+.dn{position:absolute;width:16px;height:24px;padding-top:4px;text-align:center}
+.pn{position:absolute;top:160px;width:351px;height:256px;padding:8px 12px;background:var(--panel);border:1px solid var(--line-2)}
+.pn .ph{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
+.pn .ph em{margin-left:auto;color:var(--ink-2)}
+.pn .li{display:flex;gap:8px;line-height:24px;margin-top:8px}
+.pn .li .s{flex:none;width:8px;text-align:center;color:var(--ink-3)}
+.pn .li.w .s{color:var(--ink);text-shadow:var(--b)}
+.pn .li .x{flex:1;min-width:0;word-break:keep-all;overflow-wrap:anywhere}
+.pn .li .x .dim{display:block}
+.cmd{margin-top:8px;padding:4px 8px;background:var(--lcd);border:1px solid var(--lcd-edge);line-height:24px;white-space:nowrap;overflow:hidden}
+.cmd .d{display:block;color:var(--ink-3)}
+.cmd .k{display:block;color:var(--ink);text-shadow:var(--b)}
+.cmd .k::before{content:"$ ";color:var(--ink-3);text-shadow:none}
+.call{position:absolute;top:456px;width:348px;height:64px;padding:8px 12px;background:var(--panel);border:1px solid var(--card-edge)}
+.call .t{line-height:24px;text-shadow:var(--b);white-space:nowrap}
+.call .s{line-height:16px;color:var(--ink-3);white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="cap">
+<div class="board">
+  <div class="hd">
+    <div class="lbl"><b>00</b>OUT<em class="ko">결과물과 기성품</em><i></i></div>
+    <span class="chip out">docs/USE-pandoc.md · USE-presenton.md</span>
+  </div>
+
+  <div class="lbl bar" style="top:48px"><b>01</b>DECK.MD<em class="ko">원본</em><i></i></div>
+  <div class="file bar" style="top:72px"><span class="chip navy">deck.md</span><span class="t" data-fit>이 묶음이 쓰는 파일은 이것 하나</span><span class="d" data-fit>자료 폴더 안</span></div>
+
+  <i class="dn" style="left:184px;top:112px"><svg width="16" height="16" viewBox="0 0 16 16" shape-rendering="crispEdges" fill="var(--prime-2)" style="vertical-align:top"><rect x="7" y="0" width="2" height="12"/><rect x="1" y="6" width="2" height="2"/><rect x="3" y="8" width="2" height="2"/><rect x="5" y="10" width="2" height="2"/><rect x="9" y="10" width="2" height="2"/><rect x="11" y="8" width="2" height="2"/><rect x="13" y="6" width="2" height="2"/></svg></i>
+  <i class="dn" style="left:543px;top:112px"><svg width="16" height="16" viewBox="0 0 16 16" shape-rendering="crispEdges" fill="var(--prime-2)" style="vertical-align:top"><rect x="7" y="0" width="2" height="12"/><rect x="1" y="6" width="2" height="2"/><rect x="3" y="8" width="2" height="2"/><rect x="5" y="10" width="2" height="2"/><rect x="9" y="10" width="2" height="2"/><rect x="11" y="8" width="2" height="2"/><rect x="13" y="6" width="2" height="2"/></svg></i>
+
+  <div class="lbl bar" style="top:136px;width:351px"><b>02</b>PANDOC<em class="ko">바깥 연결 없음</em><i></i></div>
+  <div class="lbl bar" style="top:136px;left:375px;width:351px"><b>03</b>PRESENTON<em class="ko">사내 LLM 만</em><i></i></div>
+
+  <div class="pn" style="left:16px" data-fit>
+    <div class="ph"><span class="chip navy">기본 양식 먼저</span><em>회사 양식은 그다음</em></div>
+    <div class="cmd on-dark" data-fit><span class="d">자료 폴더에서</span><span class="k">pandoc deck.md -o deck.pptx</span></div>
+    <div class="li"><span class="s">›</span><span class="x">꼬리표는 글자 그대로 · 노트는 발표자 노트로</span></div>
+    <div class="li w"><span class="s">⊠</span><span class="x">표준 이름은 있고 자리표시자가 없는 양식은 종료 63<span class="dim">합성 양식 시험 · 회사 양식은 미확인</span></span></div>
+  </div>
+
+  <div class="pn" style="left:375px" data-fit>
+    <div class="ph"><span class="chip navy">합성 자료만</span><em>확인 전에는</em></div>
+    <div class="li"><span class="s">›</span><span class="x">LLM=custom · 사내 OpenAI 호환 주소</span></div>
+    <div class="li"><span class="s">○</span><span class="x">끔 — Presenton Cloud · 웹 검색 · 그림 생성 · 커뮤니티 갤러리 · 사용 통계</span></div>
+    <div class="li"><span class="s">›</span><span class="x">글을 다시 쓸 수 있어 결과는 사본</span></div>
+    <div class="li w"><span class="s">⊠</span><span class="x">데스크톱 앱에서 이 설정을 끌 수 있는지는 미확인</span></div>
+  </div>
+
+  <i class="dn" style="left:184px;top:418px;height:16px;padding-top:0"><svg width="16" height="16" viewBox="0 0 16 16" shape-rendering="crispEdges" fill="var(--prime-2)" style="vertical-align:top"><rect x="7" y="0" width="2" height="12"/><rect x="1" y="6" width="2" height="2"/><rect x="3" y="8" width="2" height="2"/><rect x="5" y="10" width="2" height="2"/><rect x="9" y="10" width="2" height="2"/><rect x="11" y="8" width="2" height="2"/><rect x="13" y="6" width="2" height="2"/></svg></i>
+  <i class="dn" style="left:543px;top:418px;height:16px;padding-top:0"><svg width="16" height="16" viewBox="0 0 16 16" shape-rendering="crispEdges" fill="var(--prime-2)" style="vertical-align:top"><rect x="7" y="0" width="2" height="12"/><rect x="1" y="6" width="2" height="2"/><rect x="3" y="8" width="2" height="2"/><rect x="5" y="10" width="2" height="2"/><rect x="9" y="10" width="2" height="2"/><rect x="11" y="8" width="2" height="2"/><rect x="13" y="6" width="2" height="2"/></svg></i>
+
+  <div class="lbl bar" style="top:436px"><b>04</b>PPTX<em class="ko">사본</em><i></i></div>
+  <div class="call" style="left:16px"><div class="t" data-fit>PPTX 는 사본입니다</div><div class="s" data-fit>제목 · 숫자 · 꼬리표를 deck.md 와 대조</div></div>
+  <div class="call" style="left:378px"><div class="t" data-fit>회사 템플릿은 이 묶음 밖</div><div class="s" data-fit>알려진 한계 · 사내 시범 (T22) 에서 잼</div></div>
+</div>
+</div>
+</body>
+</html>

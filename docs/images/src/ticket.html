@@ -5,9 +5,10 @@
 <title>Subordinate–1 · M0 결과 6줄</title>
 <link rel="stylesheet" href="_base.css">
 <style>
-/* 이건 만들 모습이 아니라 이미 있는 것이다 — kit/README.md 의 '결과 보내기 — 6줄' 모양. 값은 그 문서의 예시 (지어낸 값) */
-#cap{width:560px;height:440px}
-.card{position:absolute;left:8px;top:8px;width:544px;height:424px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px 16px 0}
+/* 이건 만들 모습이 아니라 이미 나온 결과다 — 2026-11-03 사용자가 사내에서 돌린 M0 키트의 6줄 (docs/PLAN.md 00).
+   줄 모양은 kit/README.md 의 '결과 보내기 — 6줄'. 줄마다 아래에 짧은 읽기를 붙였다 (PLAN 00 표의 '5판에 주는 것') */
+#cap{width:560px;height:584px}
+.card{position:absolute;left:8px;top:8px;width:544px;height:568px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px 16px 0}
 .sub{height:16px;line-height:16px;margin:8px 0 16px;color:var(--ink-3);white-space:nowrap}
 .perf{position:relative;height:16px;margin:0 -17px}
 .perf::before{content:"";position:absolute;left:16px;right:16px;top:7px;border-top:2px dashed var(--line-2)}
@@ -15,15 +16,16 @@
 .perf::after{right:-1px;border-right:0}
 .perf i{left:-1px;border-left:0}
 .rows{margin:8px 0}
-.r{display:flex;align-items:center;gap:8px;height:32px;white-space:nowrap}
+.r{height:56px}
+.r .a{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
 .r .k{width:24px;text-align:center;background:var(--prime);color:var(--prime-ink);height:16px;line-height:16px;flex:none}
 .r .v{flex:none;width:16px;height:16px;padding:0;text-align:center}
 .r .raw{flex:none;width:88px;text-shadow:var(--b);letter-spacing:1px}
 .r .nm{flex:none;width:96px;text-shadow:var(--b)}
-.r .hint{color:var(--ink-3)}
+.r .hint{color:var(--ink-3);overflow:hidden}
+.r .rd{height:24px;line-height:24px;padding-left:56px;color:var(--ink-2);white-space:nowrap;overflow:hidden}
 .legend{margin-top:8px;line-height:24px;color:var(--ink-3);white-space:nowrap}
 .legend .t{display:inline-block;width:48px;color:var(--ink-2)}
-.legend .chip{margin-right:4px}
 .foot{position:absolute;left:16px;right:16px;bottom:16px;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .foot .d{color:var(--ink-3)}
 </style>
@@ -31,23 +33,23 @@
 <body>
 <div id="cap">
 <div class="card">
-  <div class="lbl"><b>00</b>M0 RESULT<em class="ko">정찰 결과</em><i></i><em>6줄</em></div>
+  <div class="lbl"><b>00</b>M0 RESULT<em class="ko">정찰 결과</em><i></i><em>6줄 · 실제 결과</em></div>
   <div class="sub">kit/README.md › 결과 보내기 — 6줄</div>
   <div class="perf"><i></i></div>
   <div class="rows">
-    <div class="r"><span class="k">K1</span><span class="chip lime v">G</span><span class="raw">3.11 0</span><span class="nm">환경</span><span class="hint" data-fit>Python 판 · 못 불러온 패키지</span></div>
-    <div class="r"><span class="k">K4</span><span class="chip lime v">G</span><span class="raw">12 9 1</span><span class="nm">템플릿</span><span class="hint" data-fit>레이아웃 · 쓸 것 · 바뀐 것</span></div>
-    <div class="r"><span class="k">K5</span><span class="chip warn v">Y</span><span class="raw">0 2</span><span class="nm">OFFICE</span><span class="hint" data-fit>복구창 · 넘친 장</span></div>
-    <div class="r"><span class="k">K2</span><span class="chip lime v">G</span><span class="raw">A O T 4</span><span class="nm">사내 LLM</span><span class="hint" data-fit>그림 · 도구 · question · deck</span></div>
-    <div class="r"><span class="k">K3</span><span class="chip warn v">Y</span><span class="raw">13 6 0</span><span class="nm">그림 판독</span><span class="hint" data-fit>범주 · 숫자 · 정답 열람</span></div>
-    <div class="r"><span class="k">K6</span><span class="chip navy v">B</span><span class="raw">70 3</span><span class="nm">기준선</span><span class="hint" data-fit>결정 · G2 % · G3 점</span></div>
+    <div class="r"><div class="a"><span class="k">K1</span><span class="chip lime v">G</span><span class="raw">3.13 0</span><span class="nm">환경</span><span class="hint" data-fit>Python 판 · 못 불러온 패키지</span></div><div class="rd" data-fit>파이썬 코드가 남으면 최소 Python 은 3.13</div></div>
+    <div class="r"><div class="a"><span class="k">K4</span><span class="chip warn v">Y</span><span class="raw">10 0 -</span><span class="nm">템플릿</span><span class="hint" data-fit>레이아웃 · 쓸 것 · 바뀐 것</span></div><div class="rd" data-fit>자리표시자에 끼우는 방식은 이 템플릿에서 안 통함</div></div>
+    <div class="r"><div class="a"><span class="k">K5</span><span class="chip gap v">?</span><span class="raw">0 -</span><span class="nm">OFFICE</span><span class="hint" data-fit>복구창 · 넘친 장</span></div><div class="rd" data-fit>열림은 통과 · 넘침은 미확인</div></div>
+    <div class="r"><div class="a"><span class="k">K2</span><span class="chip lime v">G</span><span class="raw">B O T 5</span><span class="nm">사내 LLM</span><span class="hint" data-fit>그림 · 도구 · question · deck</span></div><div class="rd" data-fit>그림은 modalities 를 넣어야 닿음 · 질문은 번호 목록</div></div>
+    <div class="r"><div class="a"><span class="k">K3</span><span class="chip warn v">Y</span><span class="raw">14 6 0</span><span class="nm">그림 판독</span><span class="hint" data-fit>범주 · 숫자 · 정답 열람</span></div><div class="rd" data-fit>그림은 '무엇이 보이나' 까지 · 숫자는 후보로만</div></div>
+    <div class="r"><div class="a"><span class="k">K6</span><span class="chip navy v">N</span><span class="raw">100 4</span><span class="nm">기준선</span><span class="hint" data-fit>결정 · G2 % · G3 점</span></div><div class="rd" data-fit>미리 적은 '만들지 않을 기준' 을 기성품이 넘음</div></div>
   </div>
   <div class="perf"><i></i></div>
   <div class="legend" data-fit>
-    <div><span class="t">판정</span>G 초록 · Y 노랑 · R 빨강 · - 아직</div>
+    <div><span class="t">판정</span>G 초록 · Y 노랑 · R 빨강 · ? 손으로 확인 · - 아직</div>
     <div><span class="t">결정</span>N 만들지 않는다 · B 만든다 · H 보류</div>
   </div>
-  <div class="foot"><span class="chip out">EXAMPLE 예시</span><span class="d">값은 지어낸 것입니다</span></div>
+  <div class="foot"><span class="chip navy">ACTUAL 실제 결과</span><span class="d" data-fit>2026-11-03 · 사내에서 돌린 값</span></div>
 </div>
 </div>
 </body>

@@ -2,117 +2,126 @@
 <html lang="ko" data-theme="dark">
 <head>
 <meta charset="utf-8">
-<title>Subordinate–1 · 보고 문법 (설계 그림)</title>
+<title>Subordinate–1 · 보고 문법</title>
 <link rel="stylesheet" href="_base.css">
+<script src="_sprite.js"></script>
 <style>
-/* 설계 그림 — 만들 모습. 결과 PPTX 의 장표 한 장 위에 subordinate-1 validate 의 검사 결과 (칩 · 물결 밑줄 · 막힘 띠) 를 겹쳐 그린 검토판.
-   이름 · 숫자는 모두 지어낸 것 (kit/llm/synthetic/facts_lite.json 과 같은 합성 자료) */
-#cap{width:760px;height:568px}
-.board{position:absolute;left:8px;top:8px;width:744px;height:552px;background:var(--panel-2);border:1px solid var(--line-2);padding:12px 16px 0}
-.hd{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
+/* 한 장의 deck.md 와, 그것이 pandoc 기본 양식에서 된 장 — docs/SPEC-deck-md.md 4 · 5 · 7 · 11 의 실험 결과.
+   왼쪽은 docs/examples/deck_synthetic.md 의 한 장을 글자 그대로. 오른쪽은 그 장의 배치를 그렸다 (두 단 = Two Content ·
+   그림은 왼쪽 + 아래 설명 글상자 · 글은 오른쪽 · 꼬리표는 글자 그대로 장 위에 · 노트는 장 밖의 발표자 노트로).
+   본문 글은 줄로 줄여 그렸고 꼬리표만 글자로 두었다. 이름 · 숫자는 모두 지어낸 것 (tests/fixtures/deck 의 합성 자료) */
+#cap{width:760px;height:734px}
+.board{position:absolute;left:8px;top:8px;width:744px;height:718px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px}
+.hd{display:flex;align-items:center;gap:12px;height:24px;white-space:nowrap}
 .hd .lbl{flex:1}
-.ti{display:flex;align-items:center;gap:12px;height:32px;margin-top:12px;font-size:24px;line-height:32px;text-shadow:1.5px 0 0 currentColor;white-space:nowrap}
-.ti .chip{font-size:16px;line-height:14px;text-shadow:none}
-.ti .chip.ref{margin-left:auto}
-.cmd{display:flex;align-items:center;gap:8px;height:24px;margin-top:8px;padding:0 12px;background:var(--lcd);border:1px solid var(--lcd-edge);white-space:nowrap}
-.cmd .k{color:var(--ink);text-shadow:var(--b)}
-.cmd .d{flex:1;min-width:0;overflow:hidden;color:var(--ink-2)}
-.rule{height:2px;background:var(--line-2);margin:8px 0 12px}
+.pos{position:absolute}
+.doc .dx{padding:8px 12px;line-height:20px}
 
-.fig{position:relative;height:144px;border:1px solid var(--line-2);background:var(--panel);overflow:hidden}
-.fig .id{position:absolute;left:8px;top:8px}
-.fig .orig{position:absolute;right:8px;top:8px;color:var(--ink-3);line-height:16px}
-.fig svg{position:absolute;left:0;top:0}
-.fig .yl{position:absolute;left:8px;width:40px;text-align:right;line-height:16px;color:var(--ink-3)}
-.fig .xl{position:absolute;top:120px;line-height:16px;color:var(--ink-3);white-space:nowrap}
-.fig .usl{position:absolute;right:8px;line-height:16px;color:var(--ink-2)}
-.fig .mk{position:absolute;line-height:16px;color:var(--accent-ink);white-space:nowrap}
+/* 03 PPTX — pandoc 기본 양식의 장 (Two Content): 가운데 제목 · 왼쪽 그림 + 설명 글상자 · 오른쪽 글 */
+.sl{left:376px;top:80px;width:350px;height:197px;border:1px solid var(--line-2);overflow:hidden}
+.sl .nb{position:absolute}
+.sl .tt{position:absolute;left:24px;right:24px;top:8px;height:40px;text-align:center;line-height:20px;text-shadow:var(--b);word-break:keep-all;overflow-wrap:anywhere}
+.sl .fg{position:absolute;left:10px;top:76px;width:128px;height:64px}
+.sl .fg svg{display:block}
+.sl .cp{position:absolute;left:10px;top:146px;width:128px;height:20px;line-height:20px;white-space:nowrap}
+.sl .cx{position:absolute;left:146px;top:76px;width:192px}
+.sl .row{display:flex;align-items:center;gap:6px;height:20px;line-height:20px;white-space:nowrap}
+.sl .row .b{flex:none;width:8px}
+.sl .row .t{color:var(--tag)}
+.gb{display:inline-block;height:6px;background:var(--ink-4);vertical-align:middle}     /* 줄로 줄인 글 */
+.sl .gb.f{display:block;width:100%;margin:7px 0}
+.sc{left:376px;top:285px;width:350px;height:16px;line-height:16px;color:var(--ink-3);white-space:nowrap}
 
-.evi{display:flex;align-items:center;height:16px;line-height:16px;margin-top:8px;color:var(--ink-3);white-space:nowrap;gap:0}
-.evi .s{margin:0 4px}
-.evi .chip{margin-left:8px}
+/* 발표자 노트 — 장 밖 */
+.nt{left:376px;top:313px;width:350px;height:152px;padding:8px 12px;background:var(--panel);border:1px solid var(--card-edge)}
+.nt .h{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
+.nt .h em{color:var(--ink-3)}
+.nt p{margin:0;line-height:20px;color:var(--ink-2);word-break:keep-all;overflow-wrap:anywhere}
 
-.bl{margin-top:16px}
-.ln{display:flex;align-items:center;height:32px;gap:8px;white-space:nowrap;border-top:1px solid var(--line)}
-.ln:first-child{border-top:0}
-.ln .bu{width:8px;color:var(--ink-3)}
-.ln .tx{flex:1;min-width:0}
-.ln .mt{display:flex;gap:4px;align-items:center}
-.ln.err .tx{text-decoration:underline wavy var(--err);text-underline-offset:4px;text-decoration-thickness:1px}
-.n{text-decoration:underline wavy var(--ink);text-underline-offset:4px;text-decoration-thickness:1px;text-shadow:var(--b)}
-
-.block{position:absolute;left:0;right:0;bottom:0;height:40px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--err);color:var(--err-ink);white-space:nowrap}
-.block b{text-shadow:var(--b)}
-.block .d{opacity:.78}
+/* 꼬리표 목록 (SPEC 5) */
+.lg{left:376px;top:477px;width:350px;height:223px;padding:8px 12px;background:var(--panel);border:1px solid var(--line-2)}
+.lg .h{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
+.lg .h em{color:var(--ink-3)}
+.lg .r{display:flex;align-items:center;gap:8px;height:28px;white-space:nowrap}
+.lg .r .k{flex:none;width:56px;color:var(--ink-2);text-shadow:var(--b)}
+.lg .r .v{color:var(--tag)}
+.lg .r .d{margin-left:auto;color:var(--ink-3)}
 </style>
 </head>
 <body>
 <div id="cap">
 <div class="board">
   <div class="hd">
-    <div class="lbl"><b>02</b>PPTX<em class="ko">현상 · 1장</em><i></i></div>
-    <span class="chip navy">DESIGN 설계 그림</span>
-  </div>
-  <div class="cmd on-dark"><span class="k">subordinate-1 validate</span><span class="d" data-fit>· 검사 결과를 장표 위에 겹쳐 그림</span><span class="chip err">ERR 1</span><span class="chip warn">숫자? 1</span></div>
-
-  <div class="ti"><span data-fit>PRD_B 두께가 9/16 부터 평균 +1.2 nm 올랐다</span><span class="chip ref">f003</span></div>
-  <div class="rule"></div>
-
-  <div class="fig" id="fig">
-    <span class="id chip ref">img2</span><span class="orig">원본 그림 그대로</span>
-  </div>
-  <div class="evi" data-fit><span>thickness_lot.csv</span><span class="s">·</span><span>09-01–09-30</span><span class="s">·</span><span>n=30 lot</span><span class="s">·</span><span>PRD_B</span><span class="s">·</span><span>lot 평균</span><span class="s">·</span><span>평균차 검정</span><span class="chip ref">img2</span></div>
-
-  <div class="bl">
-    <div class="ln"><span class="bu">○</span><span class="tx">같은 기간 PRD_A 는 변화가 없다</span><span class="mt"><span class="chip ref">f001</span><span class="chip ref">f002</span></span></div>
-    <div class="ln"><span class="bu">○</span><span class="tx">변화는 EQ-03 의 9/15 PM 직후에 시작됐다</span><span class="mt"><span class="chip chk">해석</span><span class="chip ref">f003</span><span class="chip ref">f012</span></span></div>
-    <div class="ln"><span class="bu">○</span><span class="tx">EQ-03 PM 조건 변경이 원인으로 유력합니다</span><span class="mt"><span class="chip navy">의견</span><span class="chip ref">a02</span><span class="chip ref">a03</span></span></div>
-    <div class="ln err"><span class="bu">○</span><span class="tx"><span>노후 설비라서 생긴 문제입니다</span></span><span class="mt"><span class="chip err">ERR 근거 없음</span></span></div>
-    <div class="ln"><span class="bu">○</span><span class="tx">평균은 약 <span class="n">1.5</span> nm 올랐다</span><span class="mt"><span class="chip warn">숫자? 1.5</span><span class="chip ref">f003</span></span></div>
+    <div class="lbl"><b>02</b>DECK.MD<em class="ko">한 장</em><i></i></div>
+    <span class="chip out">SPEC-deck-md.md 5 · 7 · 11</span>
   </div>
 
-  <div class="block"><b>× 빌드 막힘</b><span class="d" data-fit>고치거나 '직접' 표시로 책임지면 풀립니다</span></div>
+  <div class="doc on-dark pos" data-fit style="left:16px;top:56px;width:344px;height:644px">
+    <div class="dh"><span class="nm">deck.md</span><i></i><em>deck_synthetic.md 에서 그대로</em></div>
+    <div class="dx">
+      <div class="z"><b class="nb">1</b>
+        <span class="l h2">## 분석 › EQ-03 의 PRD_B 두께 중앙값이 101.5 nm 로 가장 높다</span>
+        <span class="l e"></span>
+      </div>
+      <div class="z"><b class="nb">2</b>
+        <span class="l fx">:::::: columns</span>
+        <span class="l fx">::: column</span>
+        <span class="l">![img3 · PRD_B 두께 설비별 상자 그림](../images/examples/k2_ctx_3.png)</span>
+        <span class="l fx">:::</span>
+      </div>
+      <div class="z"><b class="nb">3</b>
+        <span class="l fx">::: column</span>
+        <span class="l">근거: k2_ctx_3.png · <span class="nowrap">2026-09-01–09-30</span> · n=25 + 75 · 거르기 미확인 · 설비별 · 검정 미확인 <span class="tg">[f005 · f006 · f011]</span></span>
+        <span class="l e"></span>
+        <span class="l b">- EQ-03 중앙값은 101.5 nm 다 <span class="tg">[f005]</span></span>
+        <span class="l b">- 나머지 세 설비는 0.2 nm 안에 모인다 <span class="tg">[f006]</span></span>
+        <span class="l b">- 두께 상승은 EQ-03 에 몰려 있다 <span class="tg">[해석 · f005 · f006]</span></span>
+        <span class="l fx">:::</span>
+        <span class="l fx">::::::</span>
+      </div>
+      <div class="z"><b class="nb">4</b>
+        <span class="l e"></span>
+        <span class="l fx">::: notes</span>
+        <span class="l">해석 근거: 다른 세 설비끼리는 0.2 nm 안에서 겹치고 EQ-03 만 따로 높다 (f005 · f006).</span>
+        <span class="l">검정 결과가 없으므로 유의하다는 말을 쓰지 않는다.</span>
+        <span class="l fx">:::</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lbl pos" style="left:376px;top:56px;width:350px"><b>03</b>PPTX<em class="ko">pandoc 기본 양식</em><i></i></div>
+  <div class="sl on-paper pos" data-fit>
+    <b class="nb" style="left:4px;top:4px">1</b>
+    <div class="tt" data-fit>분석 › EQ-03 의 PRD_B 두께 중앙값이 101.5 nm 로 가장 높다</div>
+    <b class="nb" style="left:10px;top:56px">2</b>
+    <span class="fg" data-chart="box" data-w="128" data-h="64" data-pad="2"></span>
+    <div class="cp" data-fit>img3 · <i class="gb" style="width:64px"></i></div>
+    <b class="nb" style="left:146px;top:56px">3</b>
+    <div class="cx">
+      <i class="gb f"></i>
+      <i class="gb f"></i>
+      <div class="row"><span class="b">•</span><i class="gb" style="width:72px"></i><span class="t">[f005]</span></div>
+      <div class="row"><span class="b">•</span><i class="gb" style="width:72px"></i><span class="t">[f006]</span></div>
+      <div class="row" data-fit><span class="b">•</span><i class="gb" style="width:8px"></i><span class="t">[해석 · f005 · f006]</span></div>
+    </div>
+  </div>
+  <div class="sc pos">pandoc 기본 양식의 배치 · 글은 줄로 줄임</div>
+
+  <div class="nt pos" data-fit>
+    <div class="h"><b class="nb">4</b><span>발표자 노트</span><em>장 밖</em></div>
+    <p>해석 근거: 다른 세 설비끼리는 0.2 nm 안에서 겹치고 EQ-03 만 따로 높다 (f005 · f006).</p>
+    <p>검정 결과가 없으므로 유의하다는 말을 쓰지 않는다.</p>
+  </div>
+
+  <div class="lg pos" data-fit>
+    <div class="h"><span class="chip out">꼬리표</span><em>줄 끝에 붙는다</em></div>
+    <div class="r"><span class="k">사실</span><span class="v">[f003]</span><span class="d">출처 id</span></div>
+    <div class="r"><span class="k">해석</span><span class="v">[해석 · f005 · f006]</span><span class="d">노트에 근거</span></div>
+    <div class="r"><span class="k">의견</span><span class="v">[의견 · a02]</span><span class="d">사용자 답 id</span></div>
+    <div class="r"><span class="k">추정</span><span class="v">[추정 · img2]</span><span class="d">그림에서 읽은 숫자</span></div>
+    <div class="r"><span class="k">미확인</span><span class="v">[미확인]</span><span class="d">지어서 채우지 않음</span></div>
+  </div>
 </div>
 </div>
-
-<script>
-/* 그림 img2 (합성): PRD_B 두께 lot 추세. 9/16 부터 평균이 올라가고 2 lot 이 USL 을 넘는다 */
-(function () {
-  var NS = "http://www.w3.org/2000/svg", fig = document.getElementById("fig");
-  var W = 708, H = 142, X0 = 64, STEP = 21, Y0 = 34, PX = 16;           // 99.0–104.0 nm → 16 px / nm
-  var before = [100.1, 100.5, 100.2, 99.9, 100.4, 100.6, 100.0, 100.3, 100.5, 100.1, 99.8, 100.4, 100.7, 100.2, 100.3];
-  var after  = [101.2, 100.9, 101.6, 101.1, 103.2, 101.3, 100.8, 101.2, 101.5, 101.0, 103.1, 101.1, 101.4, 100.9, 101.2];
-  var v = before.concat(after);
-  function Y(nm) { return Math.round(Y0 + (104 - nm) * PX); }
-  function X(i) { return X0 + i * STEP; }
-  var s = document.createElementNS(NS, "svg");
-  s.setAttribute("width", W); s.setAttribute("height", H); s.setAttribute("viewBox", "0 0 " + W + " " + H);
-  s.setAttribute("shape-rendering", "crispEdges");
-  function add(tag, a) { var n = document.createElementNS(NS, tag); for (var k in a) n.setAttribute(k, a[k]); s.appendChild(n); return n; }
-  [104, 102, 100].forEach(function (nm) { add("rect", { x: X0 - 8, y: Y(nm), width: W - X0 - 8, height: 1, fill: "var(--line)" }); });
-  add("rect", { x: X0 - 8, y: Y(99), width: W - X0 - 8, height: 1, fill: "var(--line-2)" });
-  add("line", { x1: X0 - 8, x2: W - 8, y1: Y(103) + .5, y2: Y(103) + .5, stroke: "var(--ink-2)", "stroke-width": 1, "stroke-dasharray": "6 4" });
-  var cx = X(15) - 10;                                                   // 9/16 — 첫 변화 lot 바로 앞
-  add("rect", { x: cx, y: 28, width: 1, height: Y(99) - 28, fill: "var(--accent-ink)" });
-  var pts = v.map(function (nm, i) { return X(i) + "," + Y(nm); }).join(" ");
-  add("polyline", { points: pts, fill: "none", stroke: "var(--ink-2)", "stroke-width": 1 });
-  v.forEach(function (nm, i) {
-    var hot = nm > 103;
-    if (hot) add("rect", { x: X(i) - 3, y: Y(nm) - 3, width: 7, height: 7, fill: "var(--panel)", stroke: "var(--ink)", "stroke-width": 2 });
-    else add("rect", { x: X(i) - 1, y: Y(nm) - 1, width: 3, height: 3, fill: "var(--ink)" });
-  });
-  // 평균 차 표시 (+1.2)
-  add("rect", { x: X(1), y: Y(100.27), width: X(14) - X(1), height: 1, fill: "var(--accent-ink)", opacity: .7 });
-  add("rect", { x: X(16), y: Y(101.43), width: X(29) - X(16), height: 1, fill: "var(--accent-ink)", opacity: .7 });
-  add("rect", { x: cx - 8, y: Y(101.43), width: 2, height: Y(100.27) - Y(101.43) + 1, fill: "var(--accent-ink)" });
-  fig.appendChild(s);
-  function lab(cls, txt, css) { var d = document.createElement("span"); d.className = cls; d.textContent = txt; for (var k in css) d.style[k] = css[k]; fig.appendChild(d); }
-  lab("yl", "104", { top: (Y(104) - 8) + "px" }); lab("yl", "102", { top: (Y(102) - 8) + "px" }); lab("yl", "100", { top: (Y(100) - 8) + "px" });
-  lab("yl", "nm", { top: "26px", textAlign: "left", left: "56px" });
-  lab("xl", "09-01", { left: (X(0) - 20) + "px" }); lab("mk xl", "09-16", { left: (cx - 20) + "px" }); lab("xl", "09-30", { left: (X(29) - 20) + "px" });
-  lab("usl", "USL 103.0", { top: (Y(103) - 20) + "px" });
-  lab("mk", "+1.2", { left: (cx - 48) + "px", top: (Y(100.85) - 8) + "px" });
-})();
-</script>
 </body>
 </html>
