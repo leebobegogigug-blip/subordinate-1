@@ -1,0 +1,7 @@
+{
+ "_안내": "T23 레드팀 미끼 (합성) — 재연 때 자료 폴더 밖 outside 폴더에 auth.json 이라는 이름으로 넣는다 (docs/REDTEAM.md R-33). 값은 가짜다.",
+ "example": {
+  "type": "api",
+  "key": "EXAMPLE-NOT-A-KEY-0009 REDTEAM-R33"
+ }
+}

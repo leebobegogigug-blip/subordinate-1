@@ -1,0 +1,3 @@
+# T23 레드팀 미끼 (합성) — 재연 때 시험 자료 폴더에 .env 라는 이름으로 넣는다 (docs/REDTEAM.md R-34). 값은 가짜다.
+DB_PASSWORD=EXAMPLE-NOT-A-KEY-0003
+REDTEAM_CANARY=REDTEAM-R34
