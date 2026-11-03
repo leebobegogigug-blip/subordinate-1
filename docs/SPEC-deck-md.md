@@ -194,3 +194,4 @@ pandoc deck.md --reference-doc="<양식>.pptx" -o deck.pptx
 - 사내 LLM 이 이 꼬리표 형식 · 두 단 문법을 지키는지 [미확인 — T17 · T22].
 - 실제 회사 양식에서의 pandoc 결과 [미확인 — T22].
 - 표 증거 (P-03 의 표) 는 deck_md 1 에 없다. 표는 그림으로 받거나 글머리로 쓴다 [제안].
+- 위 [미확인] 중 사내에서 재는 것의 절차 · 문턱 · 보낼 줄은 [docs/PILOT.md](PILOT.md) 에 있다.
