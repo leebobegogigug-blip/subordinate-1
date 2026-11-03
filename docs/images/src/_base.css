@@ -1,8 +1,9 @@
 /* README 그림의 공용 스타일 — works 디자인 (docs/DESIGN.md) 의 토큰을 그대로 옮겼다.
-   색은 네이비 · 라임 · 회색뿐이다. 빨강 · 주황 · 노랑 · 보라 · 분홍은 없다. 경고는 가장 밝은 글자색 + ERR 칩.
+   색은 네이비 · 라임 · 회색뿐이다. 빨강 · 주황 · 노랑 · 보라 · 분홍은 없다. 경고는 가장 밝은 글자색 + 칩.
    글꼴 GNU Unifont 는 tools/readme_pages.mjs 가 @font-face 로 넣는다 (UnifontPage). 16px 의 8 배수에서 가장 또렷하다.
    테마는 <html data-theme="dark|light"> 로 바꾼다 (렌더 스크립트가 정한다).
-   Subordinate–1 은 창이 없는 opencode 플러그인이다. 그림에 나오는 창은 둘뿐이다 — opencode 대화창 (.term) 과 결과 PPTX 의 장표 (.on-paper). */
+   Subordinate–1 은 창이 없는 opencode 플러그인이다. 그림에 나오는 것은 셋뿐이다 —
+   opencode 대화창 (.term) · 결과물 deck.md (.doc) · 기성품이 만든 PPTX 의 장 (.on-paper). */
 
 :root{
   /* works 팔레트 — 네이비 = 뼈대 · 번호 · 버튼 · 선, 라임 = 지금 · 켜짐 · 진행 · 선택, 회색 = 글자, 흰색 = 숫자 · 경고 */
@@ -10,9 +11,9 @@
   --ink:#f2f2f3;--ink-2:#a5aaae;--ink-3:#81888d;--ink-4:#5c6166;
   --line:rgba(242,242,243,.09);--line-2:rgba(242,242,243,.2);
   --accent:#6aba23;--accent-ink:#6aba23;--accent-dim:#2c4912;--on-accent:#0b0b0b;
-  --err:#f2f2f3;--err-ink:#0b0b0b;
   --prime:#1f507a;--prime-2:#3f77a6;--prime-deep:#002341;--prime-ink:#f2f2f3;--hl:rgba(63,119,166,.28);
   --card-edge:#3f77a6;--btn:#1f507a;--btn-ink:#f2f2f3;--btn-edge:#002341;
+  --tag:#b8cee0;                     /* 꼬리표 글자 — 옅은 네이비 글자 (navy5) */
   --led-off:#35383b;
   --paper:#d4d6d8;                   /* 장표 종이 — 다크 테마에서는 한 단계 낮춰 눈부시지 않게 */
   /* 인코더 네 색 (고정 순서): ① 파랑 ② 라임 ③ 흰색 ④ 회색 — "이 키가 이 값을 바꾼다" 일 때만 쓴다 */
@@ -27,8 +28,8 @@
   --ink:#0b0b0b;--ink-2:#4c5156;--ink-3:#81888d;--ink-4:#a5aaae;
   --line:rgba(0,35,65,.14);--line-2:rgba(0,35,65,.34);
   --accent-ink:#45741b;--accent-dim:#c0e79d;
-  --err:#0b0b0b;--err-ink:#f2f2f3;
   --hl:rgba(63,119,166,.18);--card-edge:#1f507a;
+  --tag:#1f507a;
   --led-off:#a5aaae;
   --paper:#f2f2f3;
   --dot:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='1' height='1' fill='%23002341' fill-opacity='.14'/%3E%3C/svg%3E");
@@ -53,18 +54,18 @@ i{font-style:normal}
 .lbl em{color:var(--ink-2);text-transform:none;letter-spacing:0}
 .lbl .ko{color:var(--ink-2);text-transform:none;letter-spacing:0}
 
-/* 칩 — Report–1 의 근거 칩 그대로: ERR = 흰 바탕 · 검정 굵은 글자, 숫자? = 검정 바탕 · 흰 테두리 */
+/* 칩 — 글자 크기 16px 에 높이 16px. 테두리가 있는 칩은 글자가 위아래에 붙지 않게 line-height 를 2px 줄인다 */
 .chip{display:inline-block;padding:0 5px;height:16px;line-height:16px;white-space:nowrap;vertical-align:top}
-.chip.err{background:var(--err);color:var(--err-ink);text-shadow:var(--b)}
 .chip.warn{height:16px;line-height:14px;border:1px solid var(--ink);color:var(--ink);text-shadow:var(--b);background:var(--panel-2)}
 .chip.ref{line-height:14px;border:1px solid var(--card-edge);color:var(--ink-2);padding:0 4px}
 .chip.out{line-height:14px;border:1px solid var(--line-2);color:var(--ink-2)}
 .chip.gap{line-height:14px;border:1px dashed var(--ink-3);color:var(--ink-2)}
-.chip.chk{line-height:14px;border:1px solid var(--card-edge);color:var(--ink)}
 .chip.navy{background:var(--prime);color:var(--prime-ink)}
 .chip.lime{background:var(--accent);color:var(--on-accent)}
 .chip.dim{line-height:14px;border:1px solid var(--line);color:var(--ink-4)}
-.chip.paper{background:var(--ink);color:var(--panel)}
+
+/* 번호 배지 — 16 × 16 */
+.nb{display:inline-block;width:16px;height:16px;line-height:16px;text-align:center;background:var(--prime);color:var(--prime-ink);text-shadow:none;vertical-align:top}
 
 /* 칸 하나 = 한 단계 (▮) */
 .cells{display:inline-flex;gap:2px;vertical-align:top}
@@ -75,51 +76,54 @@ i{font-style:normal}
 /* 글자 색 보조 */
 .dim{color:var(--ink-3)}.dim2{color:var(--ink-2)}.dim4{color:var(--ink-4)}
 .lime{color:var(--accent-ink)}
-.wavy{text-decoration:underline wavy var(--ink);text-underline-offset:4px;text-decoration-thickness:1px}
 .nowrap{white-space:nowrap}
 
 /* 늘 어두운 면 (터미널) · 늘 밝은 면 (장표 종이) — 테마와 상관없이 같은 값이다.
-   안의 칩 · 글자 · 차트는 변수만 바꿔서 그대로 쓴다 */
+   안의 칩 · 글자는 변수만 바꿔서 그대로 쓴다 */
 .on-dark{--ink:#f2f2f3;--ink-2:#a5aaae;--ink-3:#81888d;--ink-4:#5c6166;
   --line:rgba(242,242,243,.09);--line-2:rgba(242,242,243,.2);--panel:#0b0b0b;--panel-2:#131313;
-  --accent-ink:#6aba23;--card-edge:#3f77a6;--hl:rgba(63,119,166,.28);--err:#f2f2f3;--err-ink:#0b0b0b;
+  --accent-ink:#6aba23;--card-edge:#3f77a6;--hl:rgba(63,119,166,.28);--tag:#b8cee0;
   color:var(--ink)}
 .on-paper{--ink:#0b0b0b;--ink-2:#4c5156;--ink-3:#81888d;--ink-4:#a5aaae;
   --line:rgba(0,35,65,.14);--line-2:rgba(0,35,65,.34);--panel:var(--paper);--panel-2:#fafafb;
-  --accent-ink:#45741b;--card-edge:#1f507a;--hl:rgba(63,119,166,.18);--err:#0b0b0b;--err-ink:#f2f2f3;
+  --accent-ink:#45741b;--card-edge:#1f507a;--hl:rgba(63,119,166,.18);--tag:#1f507a;
   color:var(--ink);background:var(--paper)}
 
 /* 터미널 창 — opencode 대화창을 그린 것이다. 이름만 적고 로고 · 실제 화면 모양은 흉내 내지 않는다.
-   줄 모양 넷: 사용자 (.t-u) · 에이전트 (.t-a) · 질문 상자 (.qbox) · 도구 실행 (.t-tool) */
+   줄 모양 둘: 사용자 (.t-u) · 에이전트의 말 (.msg). 질문도 번호 목록 글이다 — 선택 화면 (question 도구) 은 에이전트 권한에서 막혀 있다 */
 .term{position:relative;background:var(--lcd);border:1px solid var(--lcd-edge);overflow:hidden}
 .term .tb{display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;background:var(--prime-deep);white-space:nowrap}
 .term .tb .nm{color:var(--ink);text-shadow:var(--b)}
 .term .tb i{flex:1;height:1px;background:var(--prime-2);opacity:.55}
 .term .tb em{color:var(--ink-2)}
 .term .tx{padding:12px 16px}
+.term .tx > * + *{margin-top:8px}
 .t-u{display:flex;align-items:center;gap:8px;height:24px;padding:0 8px;background:var(--hl);border-left:2px solid var(--prime-2);white-space:nowrap;overflow:hidden}
 .t-u .pr{flex:none;width:8px;color:var(--accent-ink);text-shadow:var(--b)}
-.t-a{display:flex;align-items:center;height:24px;padding:0 10px;color:var(--ink-2);white-space:nowrap;overflow:hidden}
-.t-tool{padding:4px 8px;background:var(--panel);border-left:2px solid var(--ink-4)}
-.t-c,.t-o{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap;overflow:hidden}
-.t-c{color:var(--ink);text-shadow:var(--b)}
-.t-c .pr{flex:none;width:8px;color:var(--ink-3);text-shadow:none}
-.t-o{padding-left:16px;color:var(--ink-2)}
-.t-o b{color:var(--ink)}
-.t-ok{color:var(--accent-ink);text-shadow:var(--b)}
-.t-o .chip.err{height:20px;line-height:20px;padding:0 8px}      /* 멈춤 결과 줄 — 한글 글자가 칩 위아래에 붙지 않게 4px 키운다 */
+.msg{padding:0 8px 0 12px;border-left:2px solid var(--ink-4);color:var(--ink-2);line-height:24px;word-break:keep-all;overflow-wrap:anywhere}
+.msg p{margin:0}
+.msg p.sp{margin-top:8px}                     /* 메시지 안의 빈 줄 하나 = 8px */
+.msg .h{color:var(--ink);text-shadow:var(--b)}
+.msg .o{padding-left:24px;text-indent:-24px}  /* 번호 목록: 둘째 줄부터 번호 뒤에 맞춘다 */
+.msg .dim{color:var(--ink-3)}
+.msg .tg{color:var(--tag)}
+.t-gap{height:24px;line-height:24px;padding-left:14px;color:var(--ink-3)}
 
-/* 선택지 질문 — opencode 의 question 도구처럼 그렸다: 머리 · 질문 · 선택지 2–4개 (추천이 맨 앞) · 직접 입력 */
-.qbox{border:1px solid var(--card-edge);background:var(--panel);padding:8px 12px}
-.qbox .qh{display:flex;align-items:center;gap:8px;height:24px;white-space:nowrap}
-.qbox .qh .n{margin-left:auto;color:var(--ink-3)}
-.qbox .qq{line-height:24px;text-shadow:var(--b);white-space:nowrap;overflow:hidden}
-.qbox .os{margin-top:4px}
-.opt{display:flex;align-items:center;gap:8px;height:24px;padding:0 4px 0 0;white-space:nowrap;overflow:hidden}
-.opt .go{flex:none;width:16px;text-align:center;color:var(--accent-ink)}
-.opt .kn{flex:none;width:16px;height:16px;line-height:14px;text-align:center;border:1px solid var(--line-2);color:var(--ink-2);text-shadow:none}
-.opt.sel{background:var(--hl)}
-.opt.sel .kn{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.opt .chip{margin-left:auto}
-.opt .d{color:var(--ink-3)}
-.qbox .hint{height:16px;line-height:16px;margin-top:8px;color:var(--ink-3);white-space:nowrap;overflow:hidden}
+/* deck.md 원고 — 파일 글 그대로. 꼬리표 ([f003] 등) 는 옅은 네이비, 울타리 (:::) 는 흐리게 */
+.doc{position:relative;background:var(--panel);border:1px solid var(--line-2)}
+.doc .dh{display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-bottom:1px solid var(--line-2);white-space:nowrap}
+.doc .dh .nm{color:var(--ink);text-shadow:var(--b)}
+.doc .dh i{flex:1;height:1px;background:var(--line-2)}
+.doc .dh em{color:var(--ink-3)}
+.doc .dx{padding:8px 12px;color:var(--ink-2);line-height:24px;word-break:keep-all;overflow-wrap:anywhere}
+.doc .l{display:block}
+.doc .l.b{padding-left:16px;text-indent:-16px}     /* 글머리: 둘째 줄부터 '- ' 뒤에 맞춘다 */
+.doc .l.h2{padding-left:24px;text-indent:-24px}              /* ## 제목: 둘째 줄부터 '## ' 뒤에 맞춘다 */
+.doc .l.e{height:12px}                              /* 빈 줄 (반 줄로 그린다) */
+.doc .h2{color:var(--ink);text-shadow:var(--b)}
+.doc .fx{color:var(--ink-3)}
+.doc .tg{color:var(--tag)}
+.doc .gp{color:var(--ink);text-shadow:var(--b)}
+.doc .z{position:relative;padding-left:28px}                   /* 번호 구역 — 왼쪽 고랑에 번호 배지 */
+.doc .z + .z{margin-top:4px}
+.doc .z > .nb{position:absolute;left:0;top:2px}

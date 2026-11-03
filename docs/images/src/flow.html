@@ -2,10 +2,11 @@
 <html lang="ko" data-theme="dark">
 <head>
 <meta charset="utf-8">
-<title>Subordinate–1 · 인터뷰 흐름 (설계 그림)</title>
+<title>Subordinate–1 · 인터뷰 흐름</title>
 <link rel="stylesheet" href="_base.css">
 <style>
-/* 설계 그림 — 만들 모습. docs/PLAN.md 05 의 인터뷰 흐름 0–7 · 질문 예산 12 (틀 3 · 현상 3 · 분석 4 · 의견 2) · 규칙 I-01 · I-05 */
+/* skills/subordinate-1/SKILL.md › 1 흐름 그대로 — 0 자료 받기 › 1 미리 보기 › 2 틀 › 3 현상 › 4 분석 › 5 의견 › 6 줄거리 확인 › 7 쓰기 · 저장.
+   질문 예산 12 (틀 3 · 현상 3 · 분석 4 · 의견 2) · 6 · 7 은 예산 밖. 칸은 사용자 · LLM 둘뿐이다 (파이썬 도구는 없다) */
 #cap{width:760px;height:328px}
 .board{position:absolute;left:8px;top:8px;width:744px;height:312px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px}
 .hd{display:flex;align-items:center;gap:12px;height:24px;white-space:nowrap}
@@ -22,13 +23,14 @@
 .pad.sel .n{background:var(--accent);color:var(--on-accent)}
 .arr{position:absolute;top:28px;width:10px;text-align:center;color:var(--ink-3);line-height:16px}
 
-/* 누가 · 몇 문 */
+/* 누가 (위 사용자 · 아래 LLM) · 몇 문 */
 .row{position:relative;height:40px;margin-top:8px}
-.who{position:absolute;top:0;width:80px;text-align:center}
-.who .chip{margin-bottom:4px}
+.who{position:absolute;width:80px;text-align:center}
+.who.u{top:0}
+.who.m{top:20px}
 .who .chip.navy{text-shadow:none}
 .bud{position:relative;height:40px;margin-top:0}
-.cl{position:absolute;top:0;width:80px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink-3);line-height:16px}
+.cl{position:absolute;top:0;width:80px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink-3);line-height:16px;white-space:nowrap}
 .cl .cells i{background:var(--prime-2);opacity:1}
 .rl{position:absolute;left:0;top:20px;line-height:16px;color:var(--ink-3);white-space:nowrap}
 
@@ -48,31 +50,32 @@
   <div class="hd">
     <div class="lbl"><b>01</b>OPENCODE<em class="ko">인터뷰 흐름</em><i></i></div>
     <span class="budh">질문 예산<b class="big">12</b></span>
-    <span class="chip navy">DESIGN 설계 그림</span>
+    <span class="chip out">SKILL.md › 1</span>
   </div>
 
   <div class="strip">
-    <div class="pad" style="left:0"><span class="n">0</span><span class="nm">자료</span></div>
+    <div class="pad" style="left:0"><span class="n">0</span><span class="nm">자료<br>받기</span></div>
     <div class="pad" style="left:90px"><span class="n">1</span><span class="nm">미리<br>보기</span></div>
     <div class="pad" style="left:180px"><span class="n">2</span><span class="nm">틀</span></div>
     <div class="pad" style="left:270px"><span class="n">3</span><span class="nm">현상</span></div>
     <div class="pad" style="left:360px"><span class="n">4</span><span class="nm">분석</span></div>
     <div class="pad sel" style="left:450px"><span class="n">5</span><span class="nm">의견</span></div>
-    <div class="pad" style="left:540px"><span class="n">6</span><span class="nm">줄거리</span></div>
-    <div class="pad" style="left:630px"><span class="n">7</span><span class="nm">빌드<br>검사</span></div>
+    <div class="pad" style="left:540px"><span class="n">6</span><span class="nm">줄거리<br>확인</span></div>
+    <div class="pad" style="left:630px"><span class="n">7</span><span class="nm">쓰기 ·<br>저장</span></div>
     <i class="arr" style="left:80px">›</i><i class="arr" style="left:170px">›</i><i class="arr" style="left:260px">›</i><i class="arr" style="left:350px">›</i>
     <i class="arr" style="left:440px">›</i><i class="arr" style="left:530px">›</i><i class="arr" style="left:620px">›</i>
   </div>
 
   <div class="row">
-    <div class="who" style="left:0"><span class="chip navy">‼ 사용자</span></div>
-    <div class="who" style="left:90px"><span class="chip out">도구</span><br><span class="chip out">LLM</span></div>
-    <div class="who" style="left:180px"><span class="chip navy">‼ 사용자</span></div>
-    <div class="who" style="left:270px"><span class="chip navy">‼ 사용자</span></div>
-    <div class="who" style="left:360px"><span class="chip navy">‼ 사용자</span></div>
-    <div class="who" style="left:450px"><span class="chip lime">‼ 사용자</span></div>
-    <div class="who" style="left:540px"><span class="chip navy">‼ 사용자</span></div>
-    <div class="who" style="left:630px"><span class="chip out">도구</span></div>
+    <div class="who u" style="left:0"><span class="chip navy">‼ 사용자</span></div>
+    <div class="who m" style="left:90px"><span class="chip out">LLM</span></div>
+    <div class="who u" style="left:180px"><span class="chip navy">‼ 사용자</span></div>
+    <div class="who u" style="left:270px"><span class="chip navy">‼ 사용자</span></div>
+    <div class="who u" style="left:360px"><span class="chip navy">‼ 사용자</span></div>
+    <div class="who u" style="left:450px"><span class="chip lime">‼ 사용자</span></div>
+    <div class="who u" style="left:540px"><span class="chip navy">‼ 사용자</span></div>
+    <div class="who u" style="left:630px"><span class="chip navy">‼ 사용자</span></div>
+    <div class="who m" style="left:630px"><span class="chip out">LLM</span></div>
   </div>
 
   <div class="bud">
@@ -81,11 +84,13 @@
     <div class="cl" style="left:270px"><span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i></span><span>3</span></div>
     <div class="cl" style="left:360px"><span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span>4</span></div>
     <div class="cl" style="left:450px"><span class="cells"><i class="on"></i><i class="on"></i></span><span class="lime">2</span></div>
+    <div class="cl" style="left:540px"><span class="dim4">예산 밖</span></div>
+    <div class="cl" style="left:630px"><span class="dim4">예산 밖</span></div>
   </div>
 
   <div class="calls">
     <div class="call" style="left:0"><i class="stem" style="left:309px"></i><div class="t" data-fit>데이터가 답하는 것은 묻지 않습니다</div><div class="s" data-fit>"이렇게 봤습니다 — 맞습니까" 로 확인만</div></div>
-    <div class="call hot" style="left:374px"><i class="stem hot" style="left:75px"></i><div class="t" data-fit>의견은 사용자 입에서만</div><div class="s" data-fit>모델이 쓴 의견은 ERR · 근거는 답 id</div></div>
+    <div class="call hot" style="left:374px"><i class="stem hot" style="left:75px"></i><div class="t" data-fit>의견은 사용자 입에서만</div><div class="s" data-fit>가설은 '제안' 으로만 · 근거는 답 id</div></div>
   </div>
 </div>
 </div>

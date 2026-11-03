@@ -2,22 +2,22 @@
 <html lang="ko" data-theme="dark">
 <head>
 <meta charset="utf-8">
-<title>Subordinate–1 · 누가 무엇을 (설계 그림)</title>
+<title>Subordinate–1 · 누가 무엇을</title>
 <link rel="stylesheet" href="_base.css">
 <style>
-/* 설계 그림 — 만들 모습. docs/PLAN.md 06 '누가 무엇을 만드나' 표를 그대로 옮겼다 (LLM · 도구 · 사용자). 빈 칸(—)은 그 일에 LLM 이 끼지 않는다는 뜻 */
-#cap{width:760px;height:456px}
-.board{position:absolute;left:8px;top:8px;width:744px;height:440px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px}
+/* 누가 무엇을 하나 — skills/subordinate-1/SKILL.md 0 · 4 · 5 와 docs/PLAN.md 00 을 그대로 옮겼다.
+   파이썬 도구는 없다 (접음). 빈 칸 (—) 은 그 일에 그 칸이 끼지 않는다는 뜻이다 */
+#cap{width:760px;height:608px}
+.board{position:absolute;left:8px;top:8px;width:744px;height:592px;background:var(--panel-2);border:1px solid var(--line-2);padding:16px}
 .hd{display:flex;align-items:center;gap:12px;height:24px;white-space:nowrap}
 .hd .lbl{flex:1}
-.grid{display:grid;grid-template-columns:56px repeat(3,1fr);column-gap:8px;row-gap:8px;margin-top:16px}
+.grid{display:grid;grid-template-columns:72px repeat(4,1fr);column-gap:8px;row-gap:8px;margin-top:16px}
 .ch{height:40px;white-space:nowrap;line-height:16px}
 .ch .chip{display:block;width:max-content}
 .ch .s{display:block;height:16px;line-height:16px;color:var(--ink-3);margin-top:8px}
-.rl{display:flex;align-items:center;height:32px;color:var(--ink-2);text-shadow:var(--b)}
-.c{display:flex;align-items:center;height:32px;padding:0 8px;background:var(--panel);border:1px solid var(--line-2);white-space:nowrap;overflow:hidden}
+.rl{display:flex;align-items:center;height:48px;color:var(--ink-2);text-shadow:var(--b);white-space:nowrap}
+.c{display:flex;align-items:center;height:48px;padding:0 8px;line-height:20px;background:var(--panel);border:1px solid var(--line-2);white-space:nowrap;overflow:hidden}
 .c.no{background:transparent;border:1px dashed var(--line-2);color:var(--ink-4)}
-.c .d{color:var(--ink-3);margin-left:8px}
 .calls{display:flex;gap:16px;margin-top:16px}
 .call{flex:1;height:64px;padding:8px 12px;background:var(--panel);border:1px solid var(--card-edge)}
 .call .t{line-height:24px;text-shadow:var(--b);white-space:nowrap}
@@ -29,49 +29,62 @@
 <div class="board">
   <div class="hd">
     <div class="lbl"><b>00</b>WHO<em class="ko">누가 무엇을</em><i></i></div>
-    <span class="chip navy">DESIGN 설계 그림</span>
+    <span class="chip out">SKILL.md 0 · 4 · 5</span>
   </div>
 
   <div class="grid">
     <div></div>
-    <div class="ch"><span class="chip out">LLM</span><span class="s" data-fit>opencode · 사내 LLM</span></div>
-    <div class="ch"><span class="chip navy">도구</span><span class="s" data-fit>파이썬 · 결정적 · 내 PC</span></div>
+    <div class="ch"><span class="chip out">자료</span><span class="s" data-fit>폴더 안의 파일</span></div>
     <div class="ch"><span class="chip navy">‼ 사용자</span><span class="s" data-fit>고르고 · 확정</span></div>
+    <div class="ch"><span class="chip out">LLM</span><span class="s" data-fit>사내 LLM</span></div>
+    <div class="ch"><span class="chip out">기성품</span><span class="s" data-fit>pandoc · Presenton</span></div>
 
-    <div class="rl">사실</div>
+    <div class="rl">사실 숫자</div>
+    <div class="c" data-fit>요약 · 원자료<br>한 칸</div>
+    <div class="c" data-fit>말로 준 값</div>
+    <div class="c" data-fit>옮기기만<br>셈하지 않음</div>
     <div class="c no">—</div>
-    <div class="c" data-fit>profile › facts.json</div>
-    <div class="c">확인</div>
 
-    <div class="rl">그림</div>
-    <div class="c" data-fit>판독 메모 <span class="d">[추정]</span></div>
-    <div class="c" data-fit>원본 보관 · sha256</div>
-    <div class="c" data-fit>고르기 · 순서</div>
+    <div class="rl">그림 판독</div>
+    <div class="c" data-fit>그림<br>받은 그대로</div>
+    <div class="c" data-fit>정확한 값을<br>알려 주기</div>
+    <div class="c" data-fit>판독 메모<br>숫자는 후보</div>
+    <div class="c no">—</div>
 
     <div class="rl">질문</div>
-    <div class="c" data-fit>은행에서 골라 묻기</div>
-    <div class="c">빈칸 목록</div>
-    <div class="c">답</div>
+    <div class="c no">—</div>
+    <div class="c" data-fit>번호나 글로 답</div>
+    <div class="c" data-fit>은행에서 골라<br>묻기</div>
+    <div class="c no">—</div>
 
     <div class="rl">글</div>
-    <div class="c" data-fit>제목 · 문장 초안</div>
-    <div class="c">검사</div>
-    <div class="c" data-fit>고치기 · 확정</div>
-
-    <div class="rl">배치</div>
     <div class="c no">—</div>
-    <div class="c" data-fit>템플릿 매핑 › 빌드</div>
-    <div class="c" data-fit>매핑 한 번 확인</div>
+    <div class="c" data-fit>제목 목록 확인</div>
+    <div class="c" data-fit>제목 · 문장<br>근거 id 필수</div>
+    <div class="c no">—</div>
+
+    <div class="rl">의견</div>
+    <div class="c no">—</div>
+    <div class="c" data-fit>말한 것만<br>답 id 로 남김</div>
+    <div class="c" data-fit>다듬기만<br>가설은 '제안'</div>
+    <div class="c no">—</div>
+
+    <div class="rl">PPTX</div>
+    <div class="c no">—</div>
+    <div class="c no">—</div>
+    <div class="c no">—</div>
+    <div class="c" data-fit>장 나누기 · 배치<br>PPTX 파일</div>
 
     <div class="rl">판정</div>
     <div class="c no">—</div>
-    <div class="c" data-fit>검사 V-01 – V-10</div>
-    <div class="c">예외 승인</div>
+    <div class="c" data-fit>저장 확인<br>deck.md 와 대 봄</div>
+    <div class="c" data-fit>저장 전 점검표<br>(9 항목)</div>
+    <div class="c no">—</div>
   </div>
 
   <div class="calls">
-    <div class="call"><div class="t" data-fit>LLM 은 좌표를 쓰지 않습니다</div><div class="s" data-fit>레이아웃은 회사 템플릿의 자리표시자가</div></div>
-    <div class="call"><div class="t" data-fit>글은 근거 id 를 달아야만</div><div class="s" data-fit>달지 못한 문장은 ERR · 빌드가 막힘</div></div>
+    <div class="call"><div class="t" data-fit>숫자는 자료와 사용자 답에서만</div><div class="s" data-fit>LLM 은 셈하지 않고 옮기기만 합니다</div></div>
+    <div class="call"><div class="t" data-fit>글은 근거 id 를 달아야만</div><div class="s" data-fit>달지 못한 문장은 쓰지 않거나 [미확인]</div></div>
   </div>
 </div>
 </div>
