@@ -122,6 +122,7 @@ Presenton 은 사내 LLM (<code>LLM=custom</code>) 만 쓰고 Presenton Cloud ·
 인터뷰와 글은 opencode 가 사내 LLM 과 합니다. 이 묶음에 파이썬 도구는 없고, 스킬은 명령도 인터넷도 쓰지 않습니다.<br>
 에이전트 권한은 셸 · 웹 · 하위 에이전트를 막고, 자료는 읽기만 합니다. 쓰는 것은 자료 폴더의 <code>deck.md</code> 한 파일뿐이고, 쓰기 전에 사용자에게 묻습니다.<br>
 <b>opencode 는 대화를 <code>opencode.db</code> 에 남깁니다.</b> 인터뷰에서 한 말도 거기 남고, 이 묶음은 그것을 지우지 못합니다 (<a href="INSTALL.md#제거">INSTALL.md › 알아 둘 것</a>).<br>
+<b>쓸 때 지킬 셋 — 스킬 · 권한이 못 막고 사람만 막습니다.</b> opencode 는 정해 둔 폴더에서 열고 자료 폴더는 명령 인자로 줍니다 (받은 자료 폴더에서 열지 않기) · 허락 창에서 <code>always</code> 를 누르거나 자동 승인으로 열지 않습니다 · 인터뷰 중에 Tab 으로 다른 에이전트로 바꾸지 않습니다 (<a href="docs/REDTEAM.md">REDTEAM.md</a>).<br>
 지금은 사내 LLM 전용입니다. Claude 는 나중에, 회사가 들이면 어댑터로 더합니다 (기획서 M5).
 </p>
 
@@ -159,8 +160,9 @@ Presenton 은 사내 LLM (<code>LLM=custom</code>) 만 쓰고 Presenton Cloud ·
 
 <table align="center">
 <tr><td width="140">회사 템플릿</td><td width="560">맞추기는 이 묶음이 풀지 않습니다. 사내 템플릿은 자리표시자 대신 도형 · 글상자로 짜인 것으로 보여 (K4) pandoc 이 받는지, 손으로 옮기는 데 얼마나 드는지는 모릅니다 — 사내 시범 (T22) 에서 잽니다 (<a href="docs/PLAN.md">기획서</a> 리스크 23)</td></tr>
-<tr><td>대화 기록</td><td>opencode 가 대화를 <code>opencode.db</code> 에 남깁니다 — 인터뷰에서 한 말도 남습니다 (리스크 25 · <a href="INSTALL.md#제거">INSTALL.md</a>)</td></tr>
+<tr><td>대화 기록</td><td>opencode 가 대화를 <code>opencode.db</code> 에 남깁니다 — 인터뷰에서 한 말도 남습니다 (리스크 9 · <a href="INSTALL.md#제거">INSTALL.md</a>)</td></tr>
 <tr><td>Presenton</td><td>데스크톱 앱이 바깥으로 연결하는지, 그 설정을 끌 수 있는지는 확인하지 못했습니다 — 확인 전에는 합성 자료만 (<a href="docs/USE-presenton.md">USE-presenton.md</a>)</td></tr>
+<tr><td>사람만 막는 것</td><td>위의 '쓸 때 지킬 셋' · 자료 폴더 안의 비밀 파일 · 그림 속 이름 · 주소 (그림은 고치지 않으므로 가려지지 않습니다) — 적대 검토 (<a href="docs/REDTEAM.md">REDTEAM.md</a>) · 리스크 26 – 28</td></tr>
 <tr><td>사내 시범 전</td><td>사내 모델이 질문 예산 · 꼬리표를 지키는지는 T22 에서 잽니다. 모범 대화는 사람이 쓴 것이고 실제 실행 기록이 아닙니다</td></tr>
 </table>
 
